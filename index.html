@@ -1425,7 +1425,7 @@
             </div>
             
             <div class="projects-grid" id="projectsContainer">
-                <!-- Loading state -->
+                <!-- Projects will be loaded here dynamically -->
                 <div class="loading-spinner">
                     <div class="spinner"></div>
                     <p>Loading projects...</p>
@@ -1452,7 +1452,7 @@
             </div>
             
             <div class="images-grid" id="projectImagesContainer">
-                <!-- Images will be loaded here -->
+                <!-- Project images will be loaded here dynamically -->
             </div>
         </div>
     </section>
@@ -1736,24 +1736,64 @@
     </div>
 
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDZJjM8XvHkQkYwTZ8b4zQ7z2Z4Xb4Z4Xb",
-            authDomain: "davony-digital-portfolio.firebaseapp.com",
-            databaseURL: "https://davony-digital-portfolio-default-rtdb.firebaseio.com",
-            projectId: "davony-digital-portfolio",
-            storageBucket: "davony-digital-portfolio.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abc123def456abc123def"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
         // Portfolio Data Structure
         let portfolioData = {
-            projects: []
+            projects: [
+                {
+                    id: 'proj1',
+                    name: 'Coffee Brand Identity',
+                    category: 'branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img1',
+                            name: 'logo.jpg',
+                            url: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+                            thumbnail: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
+                        },
+                        {
+                            id: 'img2',
+                            name: 'packaging.jpg',
+                            url: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+                            thumbnail: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj2',
+                    name: 'Fitness Mobile App UI',
+                    category: 'web',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img3',
+                            name: 'homepage.jpg',
+                            url: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80',
+                            thumbnail: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj3',
+                    name: 'Organic Skincare Line',
+                    category: 'packaging',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img4',
+                            name: 'package-front.jpg',
+                            url: 'https://images.unsplash.com/photo-1600857062241-98e1d6160dd0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+                            thumbnail: 'https://images.unsplash.com/photo-1600857062241-98e1d6160dd0?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
+                        },
+                        {
+                            id: 'img5',
+                            name: 'package-back.jpg',
+                            url: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+                            thumbnail: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
+                        }
+                    ]
+                }
+            ]
         };
 
         // Current state variables
@@ -1798,41 +1838,13 @@
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
-            // Set up Firebase listener
-            setupFirebaseListener();
-            
-            // Set up event listeners
+            renderProjects();
             setupEventListeners();
-            
-            // Start in public view mode
             toggleEditMode(false);
         });
 
-        // Set up Firebase real-time listener
-        function setupFirebaseListener() {
-            const projectsRef = database.ref('projects');
-            
-            projectsRef.on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    // Convert Firebase object to array
-                    portfolioData.projects = Object.values(data);
-                } else {
-                    portfolioData.projects = [];
-                }
-                
-                // Render projects after data is loaded
-                renderProjects();
-            }, (error) => {
-                console.error('Error loading data:', error);
-                // Show error message
-                projectsContainer.innerHTML = '<p class="text-center">Error loading projects. Please try again later.</p>';
-            });
-        }
-
         // Render projects
         function renderProjects() {
-            // Clear the container and remove loading spinner
             projectsContainer.innerHTML = '';
             
             if (portfolioData.projects.length === 0) {
@@ -1920,7 +1932,7 @@
         }
 
         // Create project
-        async function createProject(name, category) {
+        function createProject(name, category) {
             const newProject = {
                 id: 'proj_' + Date.now(),
                 name: name,
@@ -1929,98 +1941,41 @@
                 images: []
             };
             
-            try {
-                // Save to Firebase
-                await saveProject(newProject);
-                
-                // Add to local state
-                portfolioData.projects.push(newProject);
-                
-                // Update UI
-                renderProjects();
-                
-                return newProject;
-            } catch (error) {
-                console.error('Error creating project:', error);
-                alert('Failed to create project. Please check console for details.');
-                return null;
-            }
-        }
-
-        // Save project to Firebase
-        async function saveProject(project) {
-            return new Promise((resolve, reject) => {
-                database.ref(`projects/${project.id}`).set(project)
-                    .then(() => resolve())
-                    .catch(error => reject(error));
-            });
+            portfolioData.projects.push(newProject);
+            renderProjects();
+            return newProject;
         }
 
         // Delete project
-        async function deleteProject(projectId) {
+        function deleteProject(projectId) {
             const projectIndex = portfolioData.projects.findIndex(p => p.id === projectId);
             if (projectIndex === -1) return;
             
-            const project = portfolioData.projects[projectIndex];
+            portfolioData.projects.splice(projectIndex, 1);
+            renderProjects();
             
-            try {
-                // Remove from Firebase
-                await deleteProjectFromDB(projectId);
-                
-                // Remove from local state
-                portfolioData.projects.splice(projectIndex, 1);
-                
-                // Update UI
-                renderProjects();
-                
-                // Handle if we're viewing the deleted project
-                if (currentProjectId === projectId) {
-                    projectDetailsSection.classList.add('hidden');
-                    portfolioSection.classList.remove('hidden');
-                    currentProjectId = null;
-                }
-            } catch (error) {
-                console.error('Error deleting project:', error);
-                alert('Failed to delete project. Please check console for details.');
+            // If we're viewing the deleted project, go back to portfolio
+            if (currentProjectId === projectId) {
+                projectDetailsSection.classList.add('hidden');
+                portfolioSection.classList.remove('hidden');
+                currentProjectId = null;
             }
         }
 
-        // Delete project from Firebase
-        async function deleteProjectFromDB(projectId) {
-            return new Promise((resolve, reject) => {
-                database.ref(`projects/${projectId}`).remove()
-                    .then(() => resolve())
-                    .catch(error => reject(error));
-            });
-        }
-
         // Delete image
-        async function deleteImage(projectId, imageId) {
+        function deleteImage(projectId, imageId) {
             const project = portfolioData.projects.find(p => p.id === projectId);
             if (!project) return;
             
             const imageIndex = project.images.findIndex(img => img.id === imageId);
             if (imageIndex === -1) return;
             
-            const deletedImage = project.images.splice(imageIndex, 1)[0];
-            
-            try {
-                // Save updated project to Firebase
-                await saveProject(project);
-                
-                // Update UI
-                viewProjectDetails(projectId);
-            } catch (error) {
-                console.error('Error deleting image:', error);
-                // Revert on error
-                project.images.splice(imageIndex, 0, deletedImage);
-                viewProjectDetails(projectId);
-                alert('Failed to delete image. Please check console for details.');
-            }
+            project.images.splice(imageIndex, 1);
+            viewProjectDetails(projectId);
         }
 
         // Upload images
-        async function uploadImages() {
+        function uploadImages() {
             if (filesToUpload.length === 0) {
                 alert('Please select files to upload');
                 return;
@@ -2037,53 +1992,23 @@
                 return;
             }
             
-            // Create an array of promises for each file upload
-            const uploadPromises = filesToUpload.map(file => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        // Add the image to the project
-                        project.images.push({
-                            id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
-                            name: file.name,
-                            url: e.target.result,
-                            thumbnail: e.target.result
-                        });
-                        resolve();
-                    };
-                    reader.readAsDataURL(file);
-                });
+            filesToUpload.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    project.images.push({
+                        id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
+                        name: file.name,
+                        url: e.target.result,
+                        thumbnail: e.target.result
+                    });
+                };
+                reader.readAsDataURL(file);
             });
             
-            // Update progress bar during upload
-            let completed = 0;
-            const totalFiles = filesToUpload.length;
-            
-            uploadPromises.forEach(promise => {
-                promise.then(() => {
-                    completed++;
-                    const progress = Math.round((completed / totalFiles) * 100);
-                    progressBar.style.width = progress + '%';
-                    
-                    // When all files are processed
-                    if (completed === totalFiles) {
-                        try {
-                            // Save the updated project to Firebase
-                            await saveProject(project);
-                            
-                            // Close modal and refresh view
-                            setTimeout(() => {
-                                closeModal(uploadModal);
-                                viewProjectDetails(currentProjectId);
-                                alert('Images uploaded successfully!');
-                            }, 500);
-                        } catch (error) {
-                            console.error('Error saving project:', error);
-                            alert('Failed to save images. Please check console for details.');
-                        }
-                    }
-                });
-            });
+            // Close modal and refresh view
+            closeModal(uploadModal);
+            viewProjectDetails(currentProjectId);
+            alert('Images uploaded successfully!');
         }
 
         // Setup event listeners
@@ -2125,12 +2050,12 @@
             });
             
             // Project form submission
-            projectForm.addEventListener('submit', async function(e) {
+            projectForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const name = document.getElementById('projectName').value;
                 const category = document.getElementById('projectCategory').value;
                 
-                await createProject(name, category);
+                createProject(name, category);
                 closeModal(projectModal);
             });
             
@@ -2232,8 +2157,8 @@
             dropArea.addEventListener('drop', handleDrop, false);
             
             // Upload button
-            uploadBtn.addEventListener('click', async function() {
-                await uploadImages();
+            uploadBtn.addEventListener('click', function() {
+                uploadImages();
             });
             
             // Close modals
