@@ -8,12 +8,11 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
     <style>
-        /* CSS Variables - Updated for light blue theme */
         :root {
             --primary: #2d3436;
             --secondary: #636e72;
-            --accent: #4da6ff; /* Light blue accent */
-            --accent-light: #80bfff; /* Lighter blue */
+            --accent: #4da6ff;
+            --accent-light: #80bfff;
             --light: #dfe6e9;
             --dark: #1e272e;
             --success: #00b894;
@@ -24,7 +23,6 @@
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -113,7 +111,7 @@
 
         .btn:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(77, 166, 255, 0.4); /* Updated for blue */
+            box-shadow: 0 10px 25px rgba(77, 166, 255, 0.4);
         }
 
         .btn-outline {
@@ -135,7 +133,7 @@
             display: none !important;
         }
 
-        /* Header & Navigation */
+        /* Header */
         header {
             background-color: rgba(30, 39, 46, 0.95);
             box-shadow: var(--shadow);
@@ -212,7 +210,7 @@
         .hamburger div {
             width: 30px;
             height: 3px;
-            background-color: var(--accent); /* Updated to blue */
+            background-color: var(--accent);
             margin: 6px 0;
             transition: var(--transition);
             border-radius: 10px;
@@ -258,7 +256,7 @@
         }
 
         .hero h1 span {
-            color: var(--accent); /* Updated to blue */
+            color: var(--accent);
         }
 
         .hero p {
@@ -356,11 +354,11 @@
         .project-category {
             display: inline-block;
             padding: 6px 15px;
-            background: rgba(77, 166, 255, 0.2); /* Updated to blue */
+            background: rgba(77, 166, 255, 0.2);
             border-radius: 50px;
             font-size: 0.9rem;
             margin-bottom: 15px;
-            color: var(--accent); /* Updated to blue */
+            color: var(--accent);
         }
 
         .project-images-count {
@@ -421,7 +419,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            color: var(--accent); /* Updated to blue */
+            color: var(--accent);
             font-weight: 600;
             font-size: 1.1rem;
         }
@@ -515,7 +513,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(77, 166, 255, 0.1) 0%, transparent 70%); /* Updated to blue */
+            background: radial-gradient(circle, rgba(77, 166, 255, 0.1) 0%, transparent 70%);
             z-index: 0;
         }
 
@@ -583,7 +581,7 @@
 
         .skill-progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-light)); /* Updated to blue */
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
             border-radius: 10px;
         }
 
@@ -612,13 +610,13 @@
         .service-card:hover {
             transform: translateY(-15px);
             background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(77, 166, 255, 0.3); /* Updated to blue */
+            border-color: rgba(77, 166, 255, 0.3);
         }
 
         .service-icon {
             width: 90px;
             height: 90px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light)); /* Updated to blue */
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: white;
             border-radius: 50%;
             display: flex;
@@ -626,7 +624,7 @@
             justify-content: center;
             margin: 0 auto 30px;
             font-size: 2.5rem;
-            box-shadow: 0 10px 20px rgba(77, 166, 255, 0.3); /* Updated to blue */
+            box-shadow: 0 10px 20px rgba(77, 166, 255, 0.3);
         }
 
         .service-card h3 {
@@ -655,7 +653,7 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(77, 166, 255, 0.1) 0%, transparent 70%); /* Updated to blue */
+            background: radial-gradient(circle, rgba(77, 166, 255, 0.1) 0%, transparent 70%);
             z-index: 0;
         }
 
@@ -687,7 +685,7 @@
         .contact-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light)); /* Updated to blue */
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: white;
             border-radius: 50%;
             display: flex;
@@ -716,7 +714,7 @@
         }
 
         .social-link:hover {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light)); /* Updated to blue */
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: white;
             transform: translateY(-5px);
         }
@@ -747,9 +745,9 @@
 
         .contact-form input:focus,
         .contact-form textarea:focus {
-            border-color: var(--accent); /* Updated to blue */
+            border-color: var(--accent);
             background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.2); /* Updated to blue */
+            box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.2);
         }
 
         .contact-form textarea {
@@ -787,7 +785,7 @@
             left: 0;
             width: 50px;
             height: 3px;
-            background: var(--accent); /* Updated to blue */
+            background: var(--accent);
             border-radius: 10px;
         }
 
@@ -811,13 +809,13 @@
         }
 
         .footer-links a i {
-            color: var(--accent); /* Updated to blue */
+            color: var(--accent);
             transition: var(--transition);
         }
 
         .footer-links a:hover {
             opacity: 1;
-            color: var(--accent); /* Updated to blue */
+            color: var(--accent);
             padding-left: 5px;
         }
 
@@ -944,7 +942,7 @@
         }
 
         .lightbox-close:hover {
-            color: var(--accent); /* Updated to blue */
+            color: var(--accent);
         }
 
         .lightbox-nav {
@@ -972,7 +970,7 @@
         }
 
         .lightbox-btn:hover {
-            background-color: var(--accent); /* Updated to blue */
+            background-color: var(--accent);
             transform: scale(1.1);
         }
 
@@ -989,13 +987,13 @@
         }
 
         .file-upload:hover {
-            border-color: var(--accent); /* Updated to blue */
-            background: rgba(77, 166, 255, 0.05); /* Updated to blue */
+            border-color: var(--accent);
+            background: rgba(77, 166, 255, 0.05);
         }
 
         .file-upload i {
             font-size: 4rem;
-            color: var(--accent); /* Updated to blue */
+            color: var(--accent);
             margin-bottom: 20px;
             transition: var(--transition);
         }
@@ -1090,13 +1088,13 @@
         .admin-btn {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light)); /* Updated to blue */
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 30px rgba(77, 166, 255, 0.4); /* Updated to blue */
+            box-shadow: 0 10px 30px rgba(77, 166, 255, 0.4);
             font-size: 1.8rem;
             cursor: pointer;
             transition: var(--transition);
@@ -1359,7 +1357,7 @@
         <div class="container">
             <nav class="navbar">
                 <a href="#" class="logo">
-                    <img src="logo.png" alt="Logo" width="60" height="60"></i>Davony<span>Digital</span>Solutions
+                    <i class="fas fa-palette"></i>Davony<span>Digital</span>Solutions
                 </a>
                 <ul class="nav-links">
                     <li><a href="#portfolio"><i class="fas fa-briefcase"></i> Portfolio</a></li>
@@ -1404,6 +1402,10 @@
             
             <div class="projects-grid" id="projectsContainer">
                 <!-- Projects will be loaded here dynamically -->
+                <div class="text-center" id="loadingProjects">
+                    <i class="fas fa-spinner fa-spin fa-3x"></i>
+                    <p class="mt-3">Loading projects...</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1437,7 +1439,7 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-img">
-                    <img src="Davony.jpg" alt="David Ehigbochie">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="David Ehigbochie">
                 </div>
                 <div class="about-text">
                     <h3>Crafting Visual Experiences</h3>
@@ -1710,100 +1712,74 @@
     </div>
 
     <script>
-        // Firebase configuration - Replace with your own config
-    // Firebase configuration - Replace with your own config
-    
-const firebaseConfig = {
-    apiKey: "AIzaSyDZJjM8XvHkQkYwTZ8b4zQ7z2Z4Xb4Z4Xb",
-    authDomain: "davony-digital-portfolio.firebaseapp.com",
-    databaseURL: "https://davony-digital-portfolio-default-rtdb.firebaseio.com",
-    projectId: "davony-digital-portfolio",
-    storageBucket: "davony-digital-portfolio.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abc123def456abc123def"
-};
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDZJjM8XvHkQkYwTZ8b4zQ7z2Z4Xb4Z4Xb",
+            authDomain: "davony-digital-portfolio.firebaseapp.com",
+            databaseURL: "https://davony-digital-portfolio-default-rtdb.firebaseio.com",
+            projectId: "davony-digital-portfolio",
+            storageBucket: "davony-digital-portfolio.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abc123def456abc123def"
+        };
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-// Portfolio Data Structure
-let portfolioData = {
-    projects: []
-};
+        // Portfolio Data Structure
+        let portfolioData = {
+            projects: []
+        };
 
-// Current state variables
-let currentProjectId = null;
-let filesToUpload = [];
-let isEditMode = false;
-let currentConfirmCallback = null;
+        // Current state variables
+        let currentProjectId = null;
+        let filesToUpload = [];
+        let isEditMode = false;
+        let currentConfirmCallback = null;
 
-// DOM Elements
-const projectsContainer = document.getElementById('projectsContainer');
-const projectDetailsSection = document.getElementById('projectDetails');
-const portfolioSection = document.getElementById('portfolio');
-const projectImagesContainer = document.getElementById('projectImagesContainer');
-const projectDetailTitle = document.getElementById('projectDetailTitle');
-const projectDetailCategory = document.getElementById('projectDetailCategory');
-const projectImagesCount = document.getElementById('projectImagesCount');
-const backToProjectsBtn = document.getElementById('backToProjects');
-const adminToggle = document.getElementById('adminToggle');
-const adminPanel = document.getElementById('adminPanel');
-const addProjectBtn = document.getElementById('addProjectBtn');
-const projectModal = document.getElementById('projectModal');
-const projectForm = document.getElementById('projectForm');
-const uploadModal = document.getElementById('uploadModal');
-const dropArea = document.getElementById('dropArea');
-const fileInput = document.getElementById('fileInput');
-const browseBtn = document.getElementById('browseBtn');
-const uploadPreview = document.getElementById('uploadPreview');
-const progressBar = document.getElementById('progressBar');
-const uploadBtn = document.getElementById('uploadBtn');
-const editModeBtn = document.getElementById('editModeBtn');
-const publicModeBtn = document.getElementById('publicModeBtn');
-const lightbox = document.getElementById('lightbox');
-const lightboxImage = document.getElementById('lightboxImage');
-// Fixed querySelector - added correct class
-const lightboxClose = document.querySelector('.lightbox-close');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const confirmationModal = document.getElementById('confirmationModal');
-const confirmTitle = document.getElementById('confirmTitle');
-const confirmMessage = document.getElementById('confirmMessage');
-const confirmBtn = document.querySelector('.confirm-btn');
-const cancelBtn = document.querySelector('.cancel-btn');
+        // DOM Elements
+        const projectsContainer = document.getElementById('projectsContainer');
+        const loadingProjects = document.getElementById('loadingProjects');
+        const projectDetailsSection = document.getElementById('projectDetails');
+        const portfolioSection = document.getElementById('portfolio');
+        const projectImagesContainer = document.getElementById('projectImagesContainer');
+        const projectDetailTitle = document.getElementById('projectDetailTitle');
+        const projectDetailCategory = document.getElementById('projectDetailCategory');
+        const projectImagesCount = document.getElementById('projectImagesCount');
+        const backToProjectsBtn = document.getElementById('backToProjects');
+        const adminToggle = document.getElementById('adminToggle');
+        const adminPanel = document.getElementById('adminPanel');
+        const addProjectBtn = document.getElementById('addProjectBtn');
+        const projectModal = document.getElementById('projectModal');
+        const projectForm = document.getElementById('projectForm');
+        const uploadModal = document.getElementById('uploadModal');
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const uploadPreview = document.getElementById('uploadPreview');
+        const progressBar = document.getElementById('progressBar');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const editModeBtn = document.getElementById('editModeBtn');
+        const publicModeBtn = document.getElementById('publicModeBtn');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.querySelector('.lightbox-close');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmTitle = document.getElementById('confirmTitle');
+        const confirmMessage = document.getElementById('confirmMessage');
+        const confirmBtn = document.querySelector('.confirm-btn');
+        const cancelBtn = document.querySelector('.cancel-btn');
 
-// Initialize the app
-document.addEventListener('DOMContentLoaded', async function() {
-    // Load data from Firebase
-    await loadData();
-    
-    // Render projects after loading data
-    renderProjects();
-    
-    // Set up event listeners
-    setupEventListeners();
-    
-    // Start in public view mode
-    toggleEditMode(false);
-});
-
-// MUST ADD THESE FUNCTION DEFINITIONS:
-async function loadData() {
-    // Implementation to load data from Firebase
-}
-
-function renderProjects() {
-    // Implementation to render projects
-}
-
-function setupEventListeners() {
-    // Implementation to set up event listeners
-}
-
-function toggleEditMode(enable) {
-    // Implementation to toggle edit mode
-}
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadData();
+            renderProjects();
+            setupEventListeners();
+            toggleEditMode(false);
+        });
 
         // Load data from Firebase
         async function loadData() {
@@ -1813,14 +1789,11 @@ function toggleEditMode(enable) {
                 projectsRef.on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
-                        // Convert object to array
+                        // Convert Firebase object to array
                         portfolioData.projects = Object.values(data);
                     } else {
-                        // Create initial sample projects if no data exists
-                        createSampleProjects();
+                        portfolioData.projects = [];
                     }
-                    // Render projects after data is loaded
-                    renderProjects();
                     resolve();
                 }, (error) => {
                     console.error('Error loading data:', error);
@@ -1829,93 +1802,18 @@ function toggleEditMode(enable) {
             });
         }
 
-        // Save a single project to Firebase
-        async function saveProject(project) {
-            return new Promise((resolve, reject) => {
-                database.ref(`projects/${project.id}`).set(project)
-                    .then(() => resolve())
-                    .catch(error => reject(error));
-            });
-        }
-
-        // Delete a project from Firebase
-        async function deleteProjectFromDB(projectId) {
-            return new Promise((resolve, reject) => {
-                database.ref(`projects/${projectId}`).remove()
-                    .then(() => resolve())
-                    .catch(error => reject(error));
-            });
-        }
-
-        // Create sample projects
-        async function createSampleProjects() {
-            const sampleProjects = [
-                {
-                    id: 'proj1',
-                    name: 'Coffee Brand Identity',
-                    category: 'branding',
-                    createdDate: new Date().toISOString(),
-                    images: [
-                        {
-                            id: 'img1',
-                            name: 'logo.jpg',
-                            url: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        },
-                        {
-                            id: 'img2',
-                            name: 'packaging.jpg',
-                            url: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        }
-                    ]
-                },
-                {
-                    id: 'proj2',
-                    name: 'Fitness Mobile App UI',
-                    category: 'web',
-                    createdDate: new Date().toISOString(),
-                    images: [
-                        {
-                            id: 'img3',
-                            name: 'homepage.jpg',
-                            url: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        }
-                    ]
-                },
-                {
-                    id: 'proj3',
-                    name: 'Organic Skincare Line',
-                    category: 'packaging',
-                    createdDate: new Date().toISOString(),
-                    images: [
-                        {
-                            id: 'img4',
-                            name: 'package-front.jpg',
-                            url: 'https://images.unsplash.com/photo-1600857062241-98e1d6160dd0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1600857062241-98e1d6160dd0?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        },
-                        {
-                            id: 'img5',
-                            name: 'package-back.jpg',
-                            url: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        }
-                    ]
-                }
-            ];
-            
-            // Save sample projects to Firebase
-            portfolioData.projects = sampleProjects;
-            await Promise.all(sampleProjects.map(project => saveProject(project)));
-        }
-
+        // Render projects
         function renderProjects() {
+            if (portfolioData.projects.length === 0) {
+                projectsContainer.innerHTML = '<p class="text-center">No projects found. Add your first project!</p>';
+                return;
+            }
+            
             projectsContainer.innerHTML = '';
+            loadingProjects.style.display = 'none';
             
             portfolioData.projects.forEach(project => {
-                const thumbnail = project.images.length > 0 ? 
+                const thumbnail = project.images && project.images.length > 0 ? 
                     project.images[0].thumbnail || project.images[0].url : 
                     'https://via.placeholder.com/300x200?text=No+Images';
                 
@@ -1929,7 +1827,7 @@ function toggleEditMode(enable) {
                     <div class="project-info">
                         <span class="project-category">${getCategoryName(project.category)}</span>
                         <h3>${project.name}</h3>
-                        <p class="project-images-count"><i class="fas fa-image"></i> ${project.images.length} ${project.images.length === 1 ? 'image' : 'images'}</p>
+                        <p class="project-images-count"><i class="fas fa-image"></i> ${project.images?.length || 0} ${project.images?.length === 1 ? 'image' : 'images'}</p>
                     </div>
                     <div class="project-actions" style="opacity: ${isEditMode ? '1' : '0'}">
                         <button class="action-btn add" data-action="add-images">
@@ -1945,6 +1843,7 @@ function toggleEditMode(enable) {
             });
         }
 
+        // Get category name
         function getCategoryName(category) {
             const categories = {
                 'logo': 'Logo Design',
@@ -1956,6 +1855,7 @@ function toggleEditMode(enable) {
             return categories[category] || category;
         }
 
+        // View project details
         function viewProjectDetails(projectId) {
             const project = portfolioData.projects.find(p => p.id === projectId);
             if (!project) return;
@@ -1964,11 +1864,11 @@ function toggleEditMode(enable) {
             
             projectDetailTitle.textContent = project.name;
             projectDetailCategory.textContent = getCategoryName(project.category);
-            projectImagesCount.textContent = `${project.images.length} ${project.images.length === 1 ? 'image' : 'images'}`;
+            projectImagesCount.textContent = `${project.images?.length || 0} ${project.images?.length === 1 ? 'image' : 'images'}`;
             
             projectImagesContainer.innerHTML = '';
             
-            if (project.images.length === 0) {
+            if (!project.images || project.images.length === 0) {
                 projectImagesContainer.innerHTML = '<p class="text-center">No images in this project yet.</p>';
             } else {
                 project.images.forEach(image => {
@@ -1991,6 +1891,174 @@ function toggleEditMode(enable) {
             projectDetailsSection.classList.remove('hidden');
         }
 
+        // Create project
+        async function createProject(name, category) {
+            const newProject = {
+                id: 'proj_' + Date.now(),
+                name: name,
+                category: category,
+                createdDate: new Date().toISOString(),
+                images: []
+            };
+            
+            try {
+                // Save to Firebase
+                await saveProject(newProject);
+                
+                // Add to local state
+                portfolioData.projects.push(newProject);
+                
+                // Update UI
+                renderProjects();
+                
+                return newProject;
+            } catch (error) {
+                console.error('Error creating project:', error);
+                alert('Failed to create project. Please check console for details.');
+                return null;
+            }
+        }
+
+        // Save project to Firebase
+        async function saveProject(project) {
+            return new Promise((resolve, reject) => {
+                database.ref(`projects/${project.id}`).set(project)
+                    .then(() => resolve())
+                    .catch(error => reject(error));
+            });
+        }
+
+        // Delete project
+        async function deleteProject(projectId) {
+            const projectIndex = portfolioData.projects.findIndex(p => p.id === projectId);
+            if (projectIndex === -1) return;
+            
+            const project = portfolioData.projects[projectIndex];
+            
+            try {
+                // Remove from Firebase
+                await deleteProjectFromDB(projectId);
+                
+                // Remove from local state
+                portfolioData.projects.splice(projectIndex, 1);
+                
+                // Update UI
+                renderProjects();
+                
+                // Handle if we're viewing the deleted project
+                if (currentProjectId === projectId) {
+                    projectDetailsSection.classList.add('hidden');
+                    portfolioSection.classList.remove('hidden');
+                    currentProjectId = null;
+                }
+            } catch (error) {
+                console.error('Error deleting project:', error);
+                alert('Failed to delete project. Please check console for details.');
+            }
+        }
+
+        // Delete project from Firebase
+        async function deleteProjectFromDB(projectId) {
+            return new Promise((resolve, reject) => {
+                database.ref(`projects/${projectId}`).remove()
+                    .then(() => resolve())
+                    .catch(error => reject(error));
+            });
+        }
+
+        // Delete image
+        async function deleteImage(projectId, imageId) {
+            const project = portfolioData.projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            const imageIndex = project.images.findIndex(img => img.id === imageId);
+            if (imageIndex === -1) return;
+            
+            const deletedImage = project.images.splice(imageIndex, 1)[0];
+            
+            try {
+                // Save updated project to Firebase
+                await saveProject(project);
+                
+                // Update UI
+                viewProjectDetails(projectId);
+            } catch (error) {
+                console.error('Error deleting image:', error);
+                // Revert on error
+                project.images.splice(imageIndex, 0, deletedImage);
+                viewProjectDetails(projectId);
+                alert('Failed to delete image. Please check console for details.');
+            }
+        }
+
+        // Upload images
+        async function uploadImages() {
+            if (filesToUpload.length === 0) {
+                alert('Please select files to upload');
+                return;
+            }
+            
+            if (!currentProjectId) {
+                alert('No project selected');
+                return;
+            }
+            
+            const project = portfolioData.projects.find(p => p.id === currentProjectId);
+            if (!project) {
+                alert('Project not found');
+                return;
+            }
+            
+            // Create an array of promises for each file upload
+            const uploadPromises = filesToUpload.map(file => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Add the image to the project
+                        project.images.push({
+                            id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
+                            name: file.name,
+                            url: e.target.result,
+                            thumbnail: e.target.result
+                        });
+                        resolve();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+            
+            // Update progress bar during upload
+            let completed = 0;
+            const totalFiles = filesToUpload.length;
+            
+            uploadPromises.forEach(promise => {
+                promise.then(() => {
+                    completed++;
+                    const progress = Math.round((completed / totalFiles) * 100);
+                    progressBar.style.width = progress + '%';
+                    
+                    // When all files are processed
+                    if (completed === totalFiles) {
+                        try {
+                            // Save the updated project to Firebase
+                            await saveProject(project);
+                            
+                            // Close modal and refresh view
+                            setTimeout(() => {
+                                closeModal(uploadModal);
+                                viewProjectDetails(currentProjectId);
+                                alert('Images uploaded successfully!');
+                            }, 500);
+                        } catch (error) {
+                            console.error('Error saving project:', error);
+                            alert('Failed to save images. Please check console for details.');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Setup event listeners
         function setupEventListeners() {
             // Navigation
             document.querySelector('.hamburger').addEventListener('click', function() {
@@ -2224,6 +2292,7 @@ function toggleEditMode(enable) {
             });
         }
 
+        // Toggle edit mode
         function toggleEditMode(enable) {
             isEditMode = enable;
             
@@ -2241,107 +2310,38 @@ function toggleEditMode(enable) {
             }
         }
 
-        async function createProject(name, category) {
-            const newProject = {
-                id: 'proj_' + Date.now(),
-                name: name,
-                category: category,
-                createdDate: new Date().toISOString(),
-                images: []
-            };
-            
-            portfolioData.projects.push(newProject);
-            await saveProject(newProject);
-            renderProjects();
-            return newProject;
-        }
-
-        async function deleteProject(projectId) {
-            // Find the project index
-            const projectIndex = portfolioData.projects.findIndex(p => p.id === projectId);
-            if (projectIndex === -1) return;
-            
-            // Remove from memory
-            portfolioData.projects.splice(projectIndex, 1);
-            
-            try {
-                // Remove from database
-                await deleteProjectFromDB(projectId);
-                
-                // Update UI
-                renderProjects();
-                
-                // If we're viewing the deleted project, go back to portfolio
-                if (currentProjectId === projectId) {
-                    projectDetailsSection.classList.add('hidden');
-                    portfolioSection.classList.remove('hidden');
-                    currentProjectId = null;
-                }
-                
-                console.log(`Project ${projectId} deleted successfully from cloud database`);
-            } catch (error) {
-                console.error('Error deleting project:', error);
-                // Revert if deletion fails
-                portfolioData.projects.splice(projectIndex, 0, project);
-                renderProjects();
-                alert('Failed to delete project. Please try again.');
-            }
-        }
-
-        async function deleteImage(projectId, imageId) {
-            const project = portfolioData.projects.find(p => p.id === projectId);
-            if (!project) return;
-            
-            // Find the image index
-            const imageIndex = project.images.findIndex(img => img.id === imageId);
-            if (imageIndex === -1) return;
-            
-            // Remove from memory
-            const deletedImage = project.images.splice(imageIndex, 1)[0];
-            
-            try {
-                // Save the updated project
-                await saveProject(project);
-                
-                // Update UI
-                viewProjectDetails(projectId);
-                
-                console.log(`Image ${imageId} deleted from project ${projectId}`);
-            } catch (error) {
-                console.error('Error deleting image:', error);
-                // Revert if deletion fails
-                project.images.splice(imageIndex, 0, deletedImage);
-                viewProjectDetails(projectId);
-                alert('Failed to delete image. Please try again.');
-            }
-        }
-
+        // Handle files
         function handleFiles(files) {
             filesToUpload = Array.from(files);
             updateFilePreview();
         }
 
+        // Handle drop
         function handleDrop(e) {
             const dt = e.dataTransfer;
             const files = dt.files;
             handleFiles(files);
         }
 
+        // Prevent defaults
         function preventDefaults(e) {
             e.preventDefault();
             e.stopPropagation();
         }
 
+        // Highlight drop area
         function highlight() {
             dropArea.style.borderColor = 'var(--accent)';
-            dropArea.style.backgroundColor = 'rgba(77, 166, 255, 0.1)'; /* Updated to blue */
+            dropArea.style.backgroundColor = 'rgba(77, 166, 255, 0.1)';
         }
 
+        // Unhighlight drop area
         function unhighlight() {
             dropArea.style.borderColor = 'rgba(255, 255, 255, 0.2)';
             dropArea.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
         }
 
+        // Update file preview
         function updateFilePreview() {
             uploadPreview.innerHTML = '';
             
@@ -2373,75 +2373,18 @@ function toggleEditMode(enable) {
             });
         }
 
-        async function uploadImages() {
-            if (filesToUpload.length === 0) {
-                alert('Please select files to upload');
-                return;
-            }
-            
-            if (!currentProjectId) {
-                alert('No project selected');
-                return;
-            }
-            
-            const project = portfolioData.projects.find(p => p.id === currentProjectId);
-            if (!project) {
-                alert('Project not found');
-                return;
-            }
-            
-            // Create an array of promises for each file upload
-            const uploadPromises = filesToUpload.map(file => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        // Add the image to the project
-                        project.images.push({
-                            id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
-                            name: file.name,
-                            url: e.target.result,
-                            thumbnail: e.target.result
-                        });
-                        resolve();
-                    };
-                    reader.readAsDataURL(file);
-                });
-            });
-            
-            // Update progress bar during upload
-            let completed = 0;
-            const totalFiles = filesToUpload.length;
-            
-            uploadPromises.forEach(promise => {
-                promise.then(() => {
-                    completed++;
-                    const progress = Math.round((completed / totalFiles) * 100);
-                    progressBar.style.width = progress + '%';
-                    
-                    // When all files are processed
-                    if (completed === totalFiles) {
-                        // Save the updated project data
-                        saveProject(project).then(() => {
-                            setTimeout(() => {
-                                closeModal(uploadModal);
-                                viewProjectDetails(currentProjectId);
-                                alert('Images uploaded successfully to cloud storage!');
-                            }, 500);
-                        });
-                    }
-                });
-            });
-        }
-
+        // Open lightbox
         function openLightbox(imageSrc, projectId) {
             lightboxImage.src = imageSrc;
             openModal(lightbox);
         }
 
+        // Close lightbox
         function closeLightbox() {
             closeModal(lightbox);
         }
 
+        // Show confirmation
         function showConfirmation(title, message, callback) {
             confirmTitle.textContent = title;
             confirmMessage.textContent = message;
@@ -2449,18 +2392,22 @@ function toggleEditMode(enable) {
             openConfirmation();
         }
 
+        // Open modal
         function openModal(modal) {
             modal.classList.add('active');
         }
 
+        // Close modal
         function closeModal(modal) {
             modal.classList.remove('active');
         }
 
+        // Open confirmation
         function openConfirmation() {
             confirmationModal.classList.add('active');
         }
 
+        // Close confirmation
         function closeConfirmation() {
             confirmationModal.classList.remove('active');
             currentConfirmCallback = null;
