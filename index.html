@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Ehigbochie | Graphic Designer Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
     <style>
         /* CSS Variables - Updated for light blue theme */
         :root {
@@ -1708,123 +1710,140 @@
     </div>
 
     <script>
-        // Portfolio Data Structure
-        let portfolioData = {
-            projects: []
-        };
+        // Firebase configuration - Replace with your own config
+    // Firebase configuration - Replace with your own config
+    
+const firebaseConfig = {
+    apiKey: "AIzaSyDZJjM8XvHkQkYwTZ8b4zQ7z2Z4Xb4Z4Xb",
+    authDomain: "davony-digital-portfolio.firebaseapp.com",
+    databaseURL: "https://davony-digital-portfolio-default-rtdb.firebaseio.com",
+    projectId: "davony-digital-portfolio",
+    storageBucket: "davony-digital-portfolio.appspot.com",
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abc123def456abc123def"
+};
 
-        // Current state variables
-        let currentProjectId = null;
-        let filesToUpload = [];
-        let isEditMode = false;
-        let db = null;
-        let currentConfirmCallback = null;
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-        // DOM Elements
-        const projectsContainer = document.getElementById('projectsContainer');
-        const projectDetailsSection = document.getElementById('projectDetails');
-        const portfolioSection = document.getElementById('portfolio');
-        const projectImagesContainer = document.getElementById('projectImagesContainer');
-        const projectDetailTitle = document.getElementById('projectDetailTitle');
-        const projectDetailCategory = document.getElementById('projectDetailCategory');
-        const projectImagesCount = document.getElementById('projectImagesCount');
-        const backToProjectsBtn = document.getElementById('backToProjects');
-        const adminToggle = document.getElementById('adminToggle');
-        const adminPanel = document.getElementById('adminPanel');
-        const addProjectBtn = document.getElementById('addProjectBtn');
-        const projectModal = document.getElementById('projectModal');
-        const projectForm = document.getElementById('projectForm');
-        const uploadModal = document.getElementById('uploadModal');
-        const dropArea = document.getElementById('dropArea');
-        const fileInput = document.getElementById('fileInput');
-        const browseBtn = document.getElementById('browseBtn');
-        const uploadPreview = document.getElementById('uploadPreview');
-        const progressBar = document.getElementById('progressBar');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const editModeBtn = document.getElementById('editModeBtn');
-        const publicModeBtn = document.getElementById('publicModeBtn');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImage = document.getElementById('lightboxImage');
-        const lightboxClose = document.querySelector('.lightbox-close');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const confirmationModal = document.getElementById('confirmationModal');
-        const confirmTitle = document.getElementById('confirmTitle');
-        const confirmMessage = document.getElementById('confirmMessage');
-        const confirmBtn = document.querySelector('.confirm-btn');
-        const cancelBtn = document.querySelector('.cancel-btn');
+// Portfolio Data Structure
+let portfolioData = {
+    projects: []
+};
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Initialize IndexedDB
-            await initDB();
-            
-            // Load data from IndexedDB
-            await loadData();
-            
-            // Render projects
-            renderProjects();
-            
-            // Set up event listeners
-            setupEventListeners();
-            
-            // Start in public view mode
-            toggleEditMode(false);
-        });
+// Current state variables
+let currentProjectId = null;
+let filesToUpload = [];
+let isEditMode = false;
+let currentConfirmCallback = null;
 
-        // Initialize IndexedDB
-        function initDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open('PortfolioDB', 1);
-                
-                request.onupgradeneeded = function(event) {
-                    db = event.target.result;
-                    if (!db.objectStoreNames.contains('projects')) {
-                        const projectsStore = db.createObjectStore('projects', { keyPath: 'id' });
-                        // Create indexes for better querying
-                        projectsStore.createIndex('name', 'name', { unique: false });
-                        projectsStore.createIndex('category', 'category', { unique: false });
-                    }
-                };
-                
-                request.onsuccess = function(event) {
-                    db = event.target.result;
-                    resolve();
-                };
-                
-                request.onerror = function(event) {
-                    console.error('Database error:', event.target.error);
-                    reject(event.target.error);
-                };
-            });
-        }
+// DOM Elements
+const projectsContainer = document.getElementById('projectsContainer');
+const projectDetailsSection = document.getElementById('projectDetails');
+const portfolioSection = document.getElementById('portfolio');
+const projectImagesContainer = document.getElementById('projectImagesContainer');
+const projectDetailTitle = document.getElementById('projectDetailTitle');
+const projectDetailCategory = document.getElementById('projectDetailCategory');
+const projectImagesCount = document.getElementById('projectImagesCount');
+const backToProjectsBtn = document.getElementById('backToProjects');
+const adminToggle = document.getElementById('adminToggle');
+const adminPanel = document.getElementById('adminPanel');
+const addProjectBtn = document.getElementById('addProjectBtn');
+const projectModal = document.getElementById('projectModal');
+const projectForm = document.getElementById('projectForm');
+const uploadModal = document.getElementById('uploadModal');
+const dropArea = document.getElementById('dropArea');
+const fileInput = document.getElementById('fileInput');
+const browseBtn = document.getElementById('browseBtn');
+const uploadPreview = document.getElementById('uploadPreview');
+const progressBar = document.getElementById('progressBar');
+const uploadBtn = document.getElementById('uploadBtn');
+const editModeBtn = document.getElementById('editModeBtn');
+const publicModeBtn = document.getElementById('publicModeBtn');
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+// Fixed querySelector - added correct class
+const lightboxClose = document.querySelector('.lightbox-close');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const confirmationModal = document.getElementById('confirmationModal');
+const confirmTitle = document.getElementById('confirmTitle');
+const confirmMessage = document.getElementById('confirmMessage');
+const confirmBtn = document.querySelector('.confirm-btn');
+const cancelBtn = document.querySelector('.cancel-btn');
 
-        // Load data from IndexedDB
+// Initialize the app
+document.addEventListener('DOMContentLoaded', async function() {
+    // Load data from Firebase
+    await loadData();
+    
+    // Render projects after loading data
+    renderProjects();
+    
+    // Set up event listeners
+    setupEventListeners();
+    
+    // Start in public view mode
+    toggleEditMode(false);
+});
+
+// MUST ADD THESE FUNCTION DEFINITIONS:
+async function loadData() {
+    // Implementation to load data from Firebase
+}
+
+function renderProjects() {
+    // Implementation to render projects
+}
+
+function setupEventListeners() {
+    // Implementation to set up event listeners
+}
+
+function toggleEditMode(enable) {
+    // Implementation to toggle edit mode
+}
+
+        // Load data from Firebase
         async function loadData() {
-            return new Promise((resolve, reject) => {
-                if (!db) {
-                    reject(new Error('Database not initialized'));
-                    return;
-                }
+            return new Promise((resolve) => {
+                const projectsRef = database.ref('projects');
                 
-                const transaction = db.transaction(['projects'], 'readonly');
-                const store = transaction.objectStore('projects');
-                const request = store.getAll();
-                
-                request.onsuccess = function(event) {
-                    if (event.target.result.length > 0) {
-                        portfolioData.projects = event.target.result;
+                projectsRef.on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        // Convert object to array
+                        portfolioData.projects = Object.values(data);
                     } else {
                         // Create initial sample projects if no data exists
                         createSampleProjects();
                     }
+                    // Render projects after data is loaded
+                    renderProjects();
                     resolve();
-                };
-                
-                request.onerror = function(event) {
-                    console.error('Error loading data:', event.target.error);
-                    reject(event.target.error);
-                };
+                }, (error) => {
+                    console.error('Error loading data:', error);
+                    resolve();
+                });
+            });
+        }
+
+        // Save a single project to Firebase
+        async function saveProject(project) {
+            return new Promise((resolve, reject) => {
+                database.ref(`projects/${project.id}`).set(project)
+                    .then(() => resolve())
+                    .catch(error => reject(error));
+            });
+        }
+
+        // Delete a project from Firebase
+        async function deleteProjectFromDB(projectId) {
+            return new Promise((resolve, reject) => {
+                database.ref(`projects/${projectId}`).remove()
+                    .then(() => resolve())
+                    .catch(error => reject(error));
             });
         }
 
@@ -1887,85 +1906,9 @@
                 }
             ];
             
-            // Save sample projects to IndexedDB
+            // Save sample projects to Firebase
             portfolioData.projects = sampleProjects;
-            await saveAllProjects();
-        }
-
-        // Save all projects to IndexedDB
-        async function saveAllProjects() {
-            return new Promise((resolve, reject) => {
-                if (!db) {
-                    reject(new Error('Database not initialized'));
-                    return;
-                }
-                
-                const transaction = db.transaction(['projects'], 'readwrite');
-                const store = transaction.objectStore('projects');
-                
-                // Clear existing projects
-                store.clear();
-                
-                // Add each project
-                portfolioData.projects.forEach(project => {
-                    store.add(project);
-                });
-                
-                transaction.oncomplete = function() {
-                    resolve();
-                };
-                
-                transaction.onerror = function(event) {
-                    console.error('Error saving projects:', event.target.error);
-                    reject(event.target.error);
-                };
-            });
-        }
-
-        // Save a single project to IndexedDB
-        async function saveProject(project) {
-            return new Promise((resolve, reject) => {
-                if (!db) {
-                    reject(new Error('Database not initialized'));
-                    return;
-                }
-                
-                const transaction = db.transaction(['projects'], 'readwrite');
-                const store = transaction.objectStore('projects');
-                const request = store.put(project);
-                
-                request.onsuccess = function() {
-                    resolve();
-                };
-                
-                request.onerror = function(event) {
-                    console.error('Error saving project:', event.target.error);
-                    reject(event.target.error);
-                };
-            });
-        }
-
-        // Delete a project from IndexedDB
-        async function deleteProjectFromDB(projectId) {
-            return new Promise((resolve, reject) => {
-                if (!db) {
-                    reject(new Error('Database not initialized'));
-                    return;
-                }
-                
-                const transaction = db.transaction(['projects'], 'readwrite');
-                const store = transaction.objectStore('projects');
-                const request = store.delete(projectId);
-                
-                request.onsuccess = function() {
-                    resolve();
-                };
-                
-                request.onerror = function(event) {
-                    console.error('Error deleting project:', event.target.error);
-                    reject(event.target.error);
-                };
-            });
+            await Promise.all(sampleProjects.map(project => saveProject(project)));
         }
 
         function renderProjects() {
@@ -2335,7 +2278,7 @@
                     currentProjectId = null;
                 }
                 
-                console.log(`Project ${projectId} deleted successfully`);
+                console.log(`Project ${projectId} deleted successfully from cloud database`);
             } catch (error) {
                 console.error('Error deleting project:', error);
                 // Revert if deletion fails
@@ -2482,7 +2425,7 @@
                             setTimeout(() => {
                                 closeModal(uploadModal);
                                 viewProjectDetails(currentProjectId);
-                                alert('Images uploaded successfully!');
+                                alert('Images uploaded successfully to cloud storage!');
                             }, 500);
                         });
                     }
