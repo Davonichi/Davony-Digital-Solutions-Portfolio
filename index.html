@@ -1373,9 +1373,53 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Database Status */
+        .database-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 15px;
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 3000;
+            font-size: 0.9rem;
+        }
+
+        .status-connected {
+            background: rgba(0, 184, 148, 0.7);
+        }
+
+        .status-disconnected {
+            background: rgba(214, 48, 49, 0.7);
+        }
+
+        .status-icon {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .status-connected .status-icon {
+            background: #00b894;
+        }
+
+        .status-disconnected .status-icon {
+            background: #d63031;
+        }
     </style>
 </head>
 <body>
+    <!-- Database Status Indicator -->
+    <div class="database-status status-disconnected" id="databaseStatus">
+        <div class="status-icon"></div>
+        <span>Connecting to Database...</span>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -1736,64 +1780,26 @@
     </div>
 
     <script>
-        // Portfolio Data Structure
+        // Firebase configuration - Replace with your own Firebase config
+        const firebaseConfig = {
+  apiKey: "AIzaSyD-6rVTLc48p9PNTbO8RnvZLWLsnl_6bF4",
+  authDomain: "davony-digital-portfolio.firebaseapp.com",
+  databaseURL: "https://davony-digital-portfolio-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "davony-digital-portfolio",
+  storageBucket: "davony-digital-portfolio.firebasestorage.app",
+  messagingSenderId: "69215456044",
+  appId: "1:69215456044:web:8e5dd55df511ba436e3a89"
+};
+
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const portfolioRef = database.ref('portfolio');
+
+        // Initialize portfolio data
         let portfolioData = {
-            projects: [
-                {
-                    id: 'proj1',
-                    name: 'Coffee Brand Identity',
-                    category: 'branding',
-                    createdDate: new Date().toISOString(),
-                    images: [
-                        {
-                            id: 'img1',
-                            name: 'logo.jpg',
-                            url: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        },
-                        {
-                            id: 'img2',
-                            name: 'packaging.jpg',
-                            url: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        }
-                    ]
-                },
-                {
-                    id: 'proj2',
-                    name: 'Fitness Mobile App UI',
-                    category: 'web',
-                    createdDate: new Date().toISOString(),
-                    images: [
-                        {
-                            id: 'img3',
-                            name: 'homepage.jpg',
-                            url: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        }
-                    ]
-                },
-                {
-                    id: 'proj3',
-                    name: 'Organic Skincare Line',
-                    category: 'packaging',
-                    createdDate: new Date().toISOString(),
-                    images: [
-                        {
-                            id: 'img4',
-                            name: 'package-front.jpg',
-                            url: 'https://images.unsplash.com/photo-1600857062241-98e1d6160dd0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1600857062241-98e1d6160dd0?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        },
-                        {
-                            id: 'img5',
-                            name: 'package-back.jpg',
-                            url: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-                            thumbnail: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'
-                        }
-                    ]
-                }
-            ]
+            projects: []
         };
 
         // Current state variables
@@ -1835,13 +1841,58 @@
         const confirmMessage = document.getElementById('confirmMessage');
         const confirmBtn = document.querySelector('.confirm-btn');
         const cancelBtn = document.querySelector('.cancel-btn');
+        const databaseStatus = document.getElementById('databaseStatus');
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
-            renderProjects();
+            setupFirebaseListeners();
             setupEventListeners();
             toggleEditMode(false);
         });
+
+        // Set up Firebase real-time listeners
+        function setupFirebaseListeners() {
+            // Listen for database connection status
+            database.ref('.info/connected').on('value', (snapshot) => {
+                if (snapshot.val() === true) {
+                    databaseStatus.classList.remove('status-disconnected');
+                    databaseStatus.classList.add('status-connected');
+                    databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Connected</span>';
+                } else {
+                    databaseStatus.classList.remove('status-connected');
+                    databaseStatus.classList.add('status-disconnected');
+                    databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Disconnected</span>';
+                }
+            });
+
+            // Listen for projects data changes
+            portfolioRef.child('projects').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    // Convert the object of projects to an array
+                    portfolioData.projects = Object.keys(data).map(key => ({
+                        id: key,
+                        ...data[key]
+                    }));
+                } else {
+                    portfolioData.projects = [];
+                }
+                renderProjects();
+                
+                // If we are in project details view, update that view too
+                if (currentProjectId) {
+                    const project = portfolioData.projects.find(p => p.id === currentProjectId);
+                    if (project) {
+                        updateProjectDetailsView(project);
+                    } else {
+                        // Project was deleted? Go back to portfolio
+                        projectDetailsSection.classList.add('hidden');
+                        portfolioSection.classList.remove('hidden');
+                        currentProjectId = null;
+                    }
+                }
+            });
+        }
 
         // Render projects
         function renderProjects() {
@@ -1883,25 +1934,8 @@
             });
         }
 
-        // Get category name
-        function getCategoryName(category) {
-            const categories = {
-                'logo': 'Logo Design',
-                'branding': 'Branding',
-                'web': 'Web Design',
-                'print': 'Print Design',
-                'packaging': 'Packaging'
-            };
-            return categories[category] || category;
-        }
-
-        // View project details
-        function viewProjectDetails(projectId) {
-            const project = portfolioData.projects.find(p => p.id === projectId);
-            if (!project) return;
-            
-            currentProjectId = projectId;
-            
+        // Update project details view
+        function updateProjectDetailsView(project) {
             projectDetailTitle.textContent = project.name;
             projectDetailCategory.textContent = getCategoryName(project.category);
             projectImagesCount.textContent = `${project.images?.length || 0} ${project.images?.length === 1 ? 'image' : 'images'}`;
@@ -1926,6 +1960,27 @@
                     projectImagesContainer.appendChild(imageItem);
                 });
             }
+        }
+
+        // Get category name
+        function getCategoryName(category) {
+            const categories = {
+                'logo': 'Logo Design',
+                'branding': 'Branding',
+                'web': 'Web Design',
+                'print': 'Print Design',
+                'packaging': 'Packaging'
+            };
+            return categories[category] || category;
+        }
+
+        // View project details
+        function viewProjectDetails(projectId) {
+            const project = portfolioData.projects.find(p => p.id === projectId);
+            if (!project) return;
+            
+            currentProjectId = projectId;
+            updateProjectDetailsView(project);
             
             portfolioSection.classList.add('hidden');
             projectDetailsSection.classList.remove('hidden');
@@ -1934,44 +1989,31 @@
         // Create project
         function createProject(name, category) {
             const newProject = {
-                id: 'proj_' + Date.now(),
                 name: name,
                 category: category,
                 createdDate: new Date().toISOString(),
                 images: []
             };
             
-            portfolioData.projects.push(newProject);
-            renderProjects();
-            return newProject;
+            // Push to Firebase
+            const newProjectRef = portfolioRef.child('projects').push();
+            newProjectRef.set(newProject);
         }
 
         // Delete project
         function deleteProject(projectId) {
-            const projectIndex = portfolioData.projects.findIndex(p => p.id === projectId);
-            if (projectIndex === -1) return;
-            
-            portfolioData.projects.splice(projectIndex, 1);
-            renderProjects();
-            
-            // If we're viewing the deleted project, go back to portfolio
-            if (currentProjectId === projectId) {
-                projectDetailsSection.classList.add('hidden');
-                portfolioSection.classList.remove('hidden');
-                currentProjectId = null;
-            }
+            portfolioRef.child('projects').child(projectId).remove();
         }
 
         // Delete image
         function deleteImage(projectId, imageId) {
-            const project = portfolioData.projects.find(p => p.id === projectId);
-            if (!project) return;
+            const projectRef = portfolioRef.child('projects').child(projectId);
             
-            const imageIndex = project.images.findIndex(img => img.id === imageId);
-            if (imageIndex === -1) return;
-            
-            project.images.splice(imageIndex, 1);
-            viewProjectDetails(projectId);
+            projectRef.child('images').once('value', (snapshot) => {
+                const images = snapshot.val() || [];
+                const updatedImages = images.filter(img => img.id !== imageId);
+                projectRef.child('images').set(updatedImages);
+            });
         }
 
         // Upload images
@@ -1986,29 +2028,35 @@
                 return;
             }
             
-            const project = portfolioData.projects.find(p => p.id === currentProjectId);
-            if (!project) {
-                alert('Project not found');
-                return;
-            }
+            const projectRef = portfolioRef.child('projects').child(currentProjectId);
             
-            filesToUpload.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    project.images.push({
-                        id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
-                        name: file.name,
-                        url: e.target.result,
-                        thumbnail: e.target.result
+            projectRef.child('images').once('value', (snapshot) => {
+                const currentImages = snapshot.val() || [];
+                
+                const promises = filesToUpload.map(file => {
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            resolve({
+                                id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
+                                name: file.name,
+                                url: e.target.result,
+                                thumbnail: e.target.result
+                            });
+                        };
+                        reader.readAsDataURL(file);
                     });
-                };
-                reader.readAsDataURL(file);
+                });
+                
+                Promise.all(promises).then(newImages => {
+                    const updatedImages = [...currentImages, ...newImages];
+                    projectRef.child('images').set(updatedImages);
+                    
+                    // Close modal and refresh view
+                    closeModal(uploadModal);
+                    alert('Images uploaded successfully!');
+                });
             });
-            
-            // Close modal and refresh view
-            closeModal(uploadModal);
-            viewProjectDetails(currentProjectId);
-            alert('Images uploaded successfully!');
         }
 
         // Setup event listeners
