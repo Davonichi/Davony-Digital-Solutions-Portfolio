@@ -1349,6 +1349,30 @@
             background: rgba(255, 255, 255, 0.1);
             color: var(--light);
         }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -1401,10 +1425,10 @@
             </div>
             
             <div class="projects-grid" id="projectsContainer">
-                <!-- Projects will be loaded here dynamically -->
-                <div class="text-center" id="loadingProjects">
-                    <i class="fas fa-spinner fa-spin fa-3x"></i>
-                    <p class="mt-3">Loading projects...</p>
+                <!-- Loading state -->
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading projects...</p>
                 </div>
             </div>
         </div>
@@ -1428,7 +1452,7 @@
             </div>
             
             <div class="images-grid" id="projectImagesContainer">
-                <!-- Project images will be loaded here dynamically -->
+                <!-- Images will be loaded here -->
             </div>
         </div>
     </section>
@@ -1439,7 +1463,7 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-img">
-                    <img src="Davony.jpg" alt="David Ehigbochie">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="David Ehigbochie">
                 </div>
                 <div class="about-text">
                     <h3>Crafting Visual Experiences</h3>
@@ -1740,7 +1764,6 @@
 
         // DOM Elements
         const projectsContainer = document.getElementById('projectsContainer');
-        const loadingProjects = document.getElementById('loadingProjects');
         const projectDetailsSection = document.getElementById('projectDetails');
         const portfolioSection = document.getElementById('portfolio');
         const projectImagesContainer = document.getElementById('projectImagesContainer');
@@ -1774,43 +1797,48 @@
         const cancelBtn = document.querySelector('.cancel-btn');
 
         // Initialize the app
-        document.addEventListener('DOMContentLoaded', async function() {
-            await loadData();
-            renderProjects();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up Firebase listener
+            setupFirebaseListener();
+            
+            // Set up event listeners
             setupEventListeners();
+            
+            // Start in public view mode
             toggleEditMode(false);
         });
 
-        // Load data from Firebase
-        async function loadData() {
-            return new Promise((resolve) => {
-                const projectsRef = database.ref('projects');
+        // Set up Firebase real-time listener
+        function setupFirebaseListener() {
+            const projectsRef = database.ref('projects');
+            
+            projectsRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    // Convert Firebase object to array
+                    portfolioData.projects = Object.values(data);
+                } else {
+                    portfolioData.projects = [];
+                }
                 
-                projectsRef.on('value', (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        // Convert Firebase object to array
-                        portfolioData.projects = Object.values(data);
-                    } else {
-                        portfolioData.projects = [];
-                    }
-                    resolve();
-                }, (error) => {
-                    console.error('Error loading data:', error);
-                    resolve();
-                });
+                // Render projects after data is loaded
+                renderProjects();
+            }, (error) => {
+                console.error('Error loading data:', error);
+                // Show error message
+                projectsContainer.innerHTML = '<p class="text-center">Error loading projects. Please try again later.</p>';
             });
         }
 
         // Render projects
         function renderProjects() {
+            // Clear the container and remove loading spinner
+            projectsContainer.innerHTML = '';
+            
             if (portfolioData.projects.length === 0) {
                 projectsContainer.innerHTML = '<p class="text-center">No projects found. Add your first project!</p>';
                 return;
             }
-            
-            projectsContainer.innerHTML = '';
-            loadingProjects.style.display = 'none';
             
             portfolioData.projects.forEach(project => {
                 const thumbnail = project.images && project.images.length > 0 ? 
@@ -1993,42 +2021,21 @@
 
         // Upload images
         async function uploadImages() {
-    try {
-        // Validation checks
-        if (filesToUpload.length === 0) {
-            throw new Error('Please select files to upload');
-        }
-        
-        if (!currentProjectId) {
-            throw new Error('No project selected');
-        }
-        
-        const project = portfolioData.projects.find(p => p.id === currentProjectId);
-        if (!project) {
-            throw new Error('Project not found');
-        }
-
-        // If we get here, all validations passed
-        // Add your upload logic here...
-        // Example:
-        // const uploadResults = await handleFileUploads(filesToUpload, project);
-        // await saveProject(project);
-        
-        return { success: true, project }; // Return success status
-
-    } catch (error) {
-        console.error('Upload error:', error);
-        
-        // Only show alert if it's a validation error we threw
-        if (error instanceof Error && error.message) {
-            alert(error.message);
-        } else {
-            alert('An unexpected error occurred during upload');
-        }
-        
-        return { success: false, error: error.message };
-    }
-}
+            if (filesToUpload.length === 0) {
+                alert('Please select files to upload');
+                return;
+            }
+            
+            if (!currentProjectId) {
+                alert('No project selected');
+                return;
+            }
+            
+            const project = portfolioData.projects.find(p => p.id === currentProjectId);
+            if (!project) {
+                alert('Project not found');
+                return;
+            }
             
             // Create an array of promises for each file upload
             const uploadPromises = filesToUpload.map(file => {
@@ -2050,41 +2057,34 @@
             
             // Update progress bar during upload
             let completed = 0;
-const totalFiles = filesToUpload.length;
-
-// Convert to async/await pattern for better error handling
-try {
-    // Wait for all upload promises to complete
-    await Promise.all(uploadPromises);
-    
-    // Update progress for each completed upload
-    uploadPromises.forEach(promise => {
-        promise.then(() => {
-            completed++;
-            const progress = Math.round((completed / totalFiles) * 100);
-            progressBar.style.width = `${progress}%`;
-        });
-    });
-
-    // When all files are processed
-    if (completed === totalFiles) {
-        // Save the updated project to Firebase
-        await saveProject(project);
-        
-        // Close modal and refresh view
-        setTimeout(() => {
-            closeModal(uploadModal);
-            viewProjectDetails(currentProjectId);
-            alert('Images uploaded successfully!');
-        }, 500);
-    }
-} catch (error) {
-    console.error('Error during upload process:', error);
-    alert('Upload failed. Please check console for details.');
-    
-    // Optional: Reset UI state on error
-    progressBar.style.width = '0%';
-}
+            const totalFiles = filesToUpload.length;
+            
+            uploadPromises.forEach(promise => {
+                promise.then(() => {
+                    completed++;
+                    const progress = Math.round((completed / totalFiles) * 100);
+                    progressBar.style.width = progress + '%';
+                    
+                    // When all files are processed
+                    if (completed === totalFiles) {
+                        try {
+                            // Save the updated project to Firebase
+                            await saveProject(project);
+                            
+                            // Close modal and refresh view
+                            setTimeout(() => {
+                                closeModal(uploadModal);
+                                viewProjectDetails(currentProjectId);
+                                alert('Images uploaded successfully!');
+                            }, 500);
+                        } catch (error) {
+                            console.error('Error saving project:', error);
+                            alert('Failed to save images. Please check console for details.');
+                        }
+                    }
+                });
+            });
+        }
 
         // Setup event listeners
         function setupEventListeners() {
