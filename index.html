@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
     <style>
         :root {
             --primary: #2d3436;
@@ -1780,21 +1781,21 @@
     </div>
 
     <script>
-        // Firebase configuration - Replace with your own Firebase config
+        // Firebase configuration
         const firebaseConfig = {
-  apiKey: "AIzaSyD-6rVTLc48p9PNTbO8RnvZLWLsnl_6bF4",
-  authDomain: "davony-digital-portfolio.firebaseapp.com",
-  databaseURL: "https://davony-digital-portfolio-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "davony-digital-portfolio",
-  storageBucket: "davony-digital-portfolio.firebasestorage.app",
-  messagingSenderId: "69215456044",
-  appId: "1:69215456044:web:8e5dd55df511ba436e3a89"
-};
-
+            apiKey: "AIzaSyD-6rVTLc48p9PNTbO8RnvZLWLsnl_6bF4",
+            authDomain: "davony-digital-portfolio.firebaseapp.com",
+            databaseURL: "https://davony-digital-portfolio-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "davony-digital-portfolio",
+            storageBucket: "davony-digital-portfolio.appspot.com",
+            messagingSenderId: "69215456044",
+            appId: "1:69215456044:web:8e5dd55df511ba436e3a89"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        const storage = firebase.storage();
         const portfolioRef = database.ref('portfolio');
 
         // Initialize portfolio data
@@ -1842,6 +1843,7 @@
         const confirmBtn = document.querySelector('.confirm-btn');
         const cancelBtn = document.querySelector('.cancel-btn');
         const databaseStatus = document.getElementById('databaseStatus');
+        const loadingSpinner = document.querySelector('.loading-spinner');
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -1877,6 +1879,9 @@
                 } else {
                     portfolioData.projects = [];
                 }
+                
+                // Hide loading spinner once data is loaded
+                loadingSpinner.classList.add('hidden');
                 renderProjects();
                 
                 // If we are in project details view, update that view too
@@ -2016,7 +2021,7 @@
             });
         }
 
-        // Upload images
+        // Upload images to Firebase Storage
         function uploadImages() {
             if (filesToUpload.length === 0) {
                 alert('Please select files to upload');
@@ -2029,33 +2034,59 @@
             }
             
             const projectRef = portfolioRef.child('projects').child(currentProjectId);
+            const storageRef = storage.ref(`portfolio/${currentProjectId}`);
             
-            projectRef.child('images').once('value', (snapshot) => {
+            projectRef.child('images').once('value', async (snapshot) => {
                 const currentImages = snapshot.val() || [];
                 
-                const promises = filesToUpload.map(file => {
-                    return new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            resolve({
-                                id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
-                                name: file.name,
-                                url: e.target.result,
-                                thumbnail: e.target.result
-                            });
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                });
-                
-                Promise.all(promises).then(newImages => {
-                    const updatedImages = [...currentImages, ...newImages];
-                    projectRef.child('images').set(updatedImages);
+                try {
+                    // Upload each file to Firebase Storage
+                    for (let i = 0; i < filesToUpload.length; i++) {
+                        const file = filesToUpload[i];
+                        const fileRef = storageRef.child(`${Date.now()}_${file.name}`);
+                        
+                        // Update progress bar
+                        const uploadTask = fileRef.put(file);
+                        uploadTask.on('state_changed', 
+                            (snapshot) => {
+                                // Calculate progress percentage
+                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                progressBar.style.width = progress + '%';
+                            }
+                        );
+                        
+                        // Wait for upload to complete
+                        await uploadTask;
+                        
+                        // Get download URL
+                        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                        
+                        // Create thumbnail URL (use same URL for simplicity)
+                        const thumbnailURL = downloadURL;
+                        
+                        // Add image metadata to project
+                        currentImages.push({
+                            id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
+                            name: file.name,
+                            url: downloadURL,
+                            thumbnail: thumbnailURL
+                        });
+                    }
                     
-                    // Close modal and refresh view
+                    // Update project with new images
+                    projectRef.child('images').set(currentImages);
+                    
+                    // Reset and close modal
+                    filesToUpload = [];
+                    uploadPreview.innerHTML = '';
+                    progressBar.style.width = '0%';
                     closeModal(uploadModal);
                     alert('Images uploaded successfully!');
-                });
+                    
+                } catch (error) {
+                    console.error('Upload failed:', error);
+                    alert('Error uploading images: ' + error.message);
+                }
             });
         }
 
@@ -2065,14 +2096,6 @@
             document.querySelector('.hamburger').addEventListener('click', function() {
                 this.classList.toggle('active');
                 document.querySelector('.nav-links').classList.toggle('active');
-            });
-            
-            // Close mobile menu when clicking a link
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    document.querySelector('.hamburger').classList.remove('active');
-                    document.querySelector('.nav-links').classList.remove('active');
-                });
             });
             
             // Admin panel toggle
@@ -2170,14 +2193,6 @@
                     );
                     return;
                 }
-                
-                // Regular click - open lightbox
-                if (project) {
-                    const image = project.images.find(img => img.id === imageId);
-                    if (image) {
-                        openLightbox(image.url, currentProjectId);
-                    }
-                }
             });
             
             // File upload functionality
@@ -2219,27 +2234,6 @@
                 });
             });
             
-            // Close modals when clicking outside
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        closeModal(this);
-                    }
-                });
-            });
-            
-            // Close lightbox
-            lightboxClose.addEventListener('click', function() {
-                closeLightbox();
-            });
-            
-            // Close lightbox when clicking outside
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeLightbox();
-                }
-            });
-            
             // Confirmation modal buttons
             confirmBtn.addEventListener('click', function() {
                 if (currentConfirmCallback) {
@@ -2252,44 +2246,11 @@
                 closeConfirmation();
             });
             
-            // Close confirmation modal when clicking outside
-            confirmationModal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeConfirmation();
-                }
-            });
-            
             // Contact form submission
             document.getElementById('contactForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('Thank you for your message! I will get back to you soon.');
                 this.reset();
-            });
-            
-            // Portfolio filter
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelector('.filter-btn.active').classList.remove('active');
-                    this.classList.add('active');
-                    // Filter functionality would go here
-                });
-            });
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
             });
         }
 
@@ -2372,17 +2333,6 @@
                 };
                 reader.readAsDataURL(file);
             });
-        }
-
-        // Open lightbox
-        function openLightbox(imageSrc, projectId) {
-            lightboxImage.src = imageSrc;
-            openModal(lightbox);
-        }
-
-        // Close lightbox
-        function closeLightbox() {
-            closeModal(lightbox);
         }
 
         // Show confirmation
