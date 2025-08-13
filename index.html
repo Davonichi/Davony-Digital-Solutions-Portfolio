@@ -1508,7 +1508,7 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="David Ehigbochie">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="David Ehigbochie">
                 </div>
                 <div class="about-text">
                     <h3>Crafting Visual Experiences</h3>
@@ -2021,7 +2021,7 @@
             });
         }
 
-        // Upload images to Firebase Storage
+        // Upload images to Firebase Storage - FIXED VERSION
         function uploadImages() {
             if (filesToUpload.length === 0) {
                 alert('Please select files to upload');
@@ -2040,18 +2040,29 @@
                 const currentImages = snapshot.val() || [];
                 
                 try {
+                    // Disable upload button during upload
+                    uploadBtn.disabled = true;
+                    uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                    
                     // Upload each file to Firebase Storage
                     for (let i = 0; i < filesToUpload.length; i++) {
                         const file = filesToUpload[i];
-                        const fileRef = storageRef.child(`${Date.now()}_${file.name}`);
+                        const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}_${file.name}`;
+                        const fileRef = storageRef.child(fileName);
                         
-                        // Update progress bar
+                        // Create upload task
                         const uploadTask = fileRef.put(file);
-                        uploadTask.on('state_changed', 
+                        
+                        // Listen for state changes
+                        uploadTask.on('state_changed',
                             (snapshot) => {
-                                // Calculate progress percentage
+                                // Update progress bar
                                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                                 progressBar.style.width = progress + '%';
+                            },
+                            (error) => {
+                                console.error('Upload error:', error);
+                                alert(`Error uploading ${file.name}: ${error.message}`);
                             }
                         );
                         
@@ -2061,15 +2072,12 @@
                         // Get download URL
                         const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
                         
-                        // Create thumbnail URL (use same URL for simplicity)
-                        const thumbnailURL = downloadURL;
-                        
                         // Add image metadata to project
                         currentImages.push({
                             id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
                             name: file.name,
                             url: downloadURL,
-                            thumbnail: thumbnailURL
+                            thumbnail: downloadURL // Use same URL for thumbnail
                         });
                     }
                     
@@ -2081,11 +2089,20 @@
                     uploadPreview.innerHTML = '';
                     progressBar.style.width = '0%';
                     closeModal(uploadModal);
+                    
+                    // Re-enable upload button
+                    uploadBtn.disabled = false;
+                    uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Images';
+                    
                     alert('Images uploaded successfully!');
                     
                 } catch (error) {
                     console.error('Upload failed:', error);
                     alert('Error uploading images: ' + error.message);
+                    
+                    // Re-enable upload button on error
+                    uploadBtn.disabled = false;
+                    uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Images';
                 }
             });
         }
@@ -2096,6 +2113,14 @@
             document.querySelector('.hamburger').addEventListener('click', function() {
                 this.classList.toggle('active');
                 document.querySelector('.nav-links').classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.querySelector('.hamburger').classList.remove('active');
+                    document.querySelector('.nav-links').classList.remove('active');
+                });
             });
             
             // Admin panel toggle
@@ -2193,6 +2218,14 @@
                     );
                     return;
                 }
+                
+                // Regular click - open lightbox
+                if (project) {
+                    const image = project.images.find(img => img.id === imageId);
+                    if (image) {
+                        openLightbox(image.url, currentProjectId);
+                    }
+                }
             });
             
             // File upload functionality
@@ -2234,6 +2267,27 @@
                 });
             });
             
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal(this);
+                    }
+                });
+            });
+            
+            // Close lightbox
+            lightboxClose.addEventListener('click', function() {
+                closeLightbox();
+            });
+            
+            // Close lightbox when clicking outside
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeLightbox();
+                }
+            });
+            
             // Confirmation modal buttons
             confirmBtn.addEventListener('click', function() {
                 if (currentConfirmCallback) {
@@ -2246,11 +2300,44 @@
                 closeConfirmation();
             });
             
+            // Close confirmation modal when clicking outside
+            confirmationModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeConfirmation();
+                }
+            });
+            
             // Contact form submission
             document.getElementById('contactForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('Thank you for your message! I will get back to you soon.');
                 this.reset();
+            });
+            
+            // Portfolio filter
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelector('.filter-btn.active').classList.remove('active');
+                    this.classList.add('active');
+                    // Filter functionality would go here
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
         }
 
@@ -2333,6 +2420,17 @@
                 };
                 reader.readAsDataURL(file);
             });
+        }
+
+        // Open lightbox
+        function openLightbox(imageSrc, projectId) {
+            lightboxImage.src = imageSrc;
+            openModal(lightbox);
+        }
+
+        // Close lightbox
+        function closeLightbox() {
+            closeModal(lightbox);
         }
 
         // Show confirmation
