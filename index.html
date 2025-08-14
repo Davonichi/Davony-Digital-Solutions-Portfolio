@@ -2007,18 +2007,18 @@
 
         // Set up Supabase real-time listeners
         async function setupSupabaseListeners() {
-            try {
-                // Check database connection
-                const { data, error } = await supabase
-                    .from('projects')
-                    .select('*')
-                    .limit(1);
-                
-                if (error) throw error;
-                
-                databaseStatus.classList.remove('status-disconnected');
-                databaseStatus.classList.add('status-connected');
-                databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Connected</span>';
+    try {
+        const { error } = await supabase
+            .from('projects')
+            .select('*')
+            .limit(1);
+
+        if (error) throw error;
+
+        databaseStatus.classList.remove('status-disconnected');
+        databaseStatus.classList.add('status-connected');
+        databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Connected</span>';
+
                 
                 // Load initial projects
                 await loadProjects();
@@ -2050,7 +2050,10 @@
                 
                 if (error) throw error;
                 
-                 portfolioData.projects = Array.isArray(projects) ? projects : [];
+                 // FIX: Convert project IDs to strings for consistent handling
+        portfolioData.projects = Array.isArray(projects) 
+            ? projects.map(p => ({ ...p, id: p.id.toString() })) 
+            : [];
 
                 // Debug: Log the fetched projects
                 console.log("Fetched projects:", portfolioData.projects); 
@@ -2089,6 +2092,12 @@
     }
             
             portfolioData.projects.forEach(project => {
+
+             if (!project.id || !project.name || !project.category) {
+                console.warn("Invalid project data:", project);
+                return;
+            }
+            
                 const images = project.images || [];
         
         const thumbnail = images.length > 0 ? 
@@ -2103,24 +2112,24 @@
                         <img src="${thumbnail}" alt="${project.name}">
                     </div>
                     <div class="project-info">
-                        <span class="project-category">${getCategoryName(project.category)}</span>
-                        <h3>${project.name}</h3>
-                        <p class="project-images-count"><i class="fas fa-image"></i> ${project.images?.length || 0} ${project.images?.length === 1 ? 'image' : 'images'}</p>
-                    </div>
-                    <div class="project-actions" style="opacity: ${isEditMode ? '1' : '0'}">
-                        <button class="action-btn add" data-action="add-images">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <button class="action-btn delete" data-action="delete-project">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-                
-                projectsContainer.appendChild(projectCard);
-            });
-        }
-
+                        <!-- FIXED: Changed class from 'project极简' to 'project-category' -->
+                    <span class="project-category">${getCategoryName(project.category)}</span>
+                    <h3>${project.name}</h3>
+                    <p class="project-images-count"><i class="fas fa-image"></i> ${images.length} ${images.length === 1 ? 'image' : 'images'}</p>
+                </div>
+                <div class="project-actions" style="opacity: ${isEditMode ? '1' : '0'}">
+                    <button class="action-btn add" data-action="add-images">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="action-btn delete" data-action极简="delete-project">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            projectsContainer.appendChild(projectCard);
+        });
+    }
         // Update project details view
         function updateProjectDetailsView(project) {
             projectDetailTitle.textContent = project.name;
@@ -2174,30 +2183,41 @@
         }
 
         // Create project - Supabase version
-        async function createProject(name, category) {
-            try {
-                // Use supabaseAdmin to bypass RLS policy
-                const { data, error } = await supabaseAdmin
-                    .from('projects')
-                    .insert([
-                        { 
-                            name: name, 
-                            category: category, 
-                            images: [] 
-                        }
-                    ])
-                    .select();
-                
-                if (error) throw error;
-                
-                // Show success
-                alert('Project created successfully!');
-                
-            } catch (error) {
-                console.error('Error creating project:', error);
-                alert('Error creating project: ' + error.message);
-            }
+        // Create project - Supabase version (updated)
+async function createProject(name, category) {
+    try {
+        const { data, error } = await supabaseAdmin
+            .from('projects')
+            .insert([
+                { 
+                    name: name, 
+                    category: category, 
+                    images: [] 
+                }
+            ])
+            .select();
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+            // Convert ID to string for consistency
+            const newProject = { ...data[0], id: data[0].id.toString() };
+
+            // Add to portfolio data immediately
+            portfolioData.projects.unshift(newProject);
+
+            // Re-render the project list
+            renderProjects();
         }
+
+        alert('Project created successfully!');
+
+    } catch (error) {
+        console.error('Error creating project:', error);
+        alert('Error creating project: ' + error.message);
+    }
+}
+
 
         // Delete project - Supabase version
         async function deleteProject(projectId) {
@@ -2313,12 +2333,11 @@
                     
                     try {
                         // Upload file to Supabase storage
-                        const { data, error } = await supabase.storage
-                            .from('portfolio')
-                            .upload(filePath, file, {
-                                cacheControl: '3600',
-                                upsert: false
-                            });
+                        const { data, error } = await supabaseAdmin
+  .storage
+  .from('portfolio')
+  .upload(filePath, file, { upsert: false });
+
                         
                         if (error) throw error;
                         
