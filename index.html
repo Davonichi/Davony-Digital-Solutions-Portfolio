@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Ehigbochie | Graphic Designer Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        /* All CSS styles remain unchanged */
         :root {
             --primary: #2d3436;
             --secondary: #636e72;
@@ -745,9 +744,9 @@
         }
 
         .contact-form input:focus,
-        .contact-form textarea:focus {
+        .contact极简 textarea:focus {
             border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 极简.1);
             box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.2);
         }
 
@@ -797,7 +796,7 @@
         }
 
         .footer-links li {
-            margin-bottom: 15px;
+            margin-bottom: 15极简;
         }
 
         .footer-links a {
@@ -1312,7 +1311,7 @@
             text-align: center;
             max-width: 500px;
             width: 90%;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25极简 50px rgba(0, 0, 0, 0.5);
         }
         
         .confirmation-content h3 {
@@ -1411,6 +1410,94 @@
 
         .status-disconnected .status-icon {
             background: #d63031;
+        }    
+        /* Added new styles for upload status */
+        .upload-status-container {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .status-success .status-icon {
+            background-color: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+        }
+        
+        .status-error .status-icon {
+            background-color: rgba(214, 48, 49, 0.2);
+            color: var(--danger);
+        }
+        
+        .status-progress .status-icon {
+            background-color: rgba(253, 203, 110, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-info {
+            flex: 1;
+        }
+        
+        .status-file-name {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .status-message {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        /* Error message box */
+        .error-box {
+            background-color: rgba(214, 48, 49, 0.2);
+            border: 1px solid var(--danger);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 20px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .error-box h3 {
+            color: var(--danger);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .error-box p {
+            margin-bottom: 15px;
+        }
+        
+        .error-box code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
         }
     </style>
 </head>
@@ -1419,6 +1506,12 @@
     <div class="database-status status-disconnected" id="databaseStatus">
         <div class="status-icon"></div>
         <span>Connecting to Database...</span>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#1e272e;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="spinner"></div>
+        <p style="color:white;font-size:1.2rem;margin-top:20px;">Loading portfolio...</p>
     </div>
 
     <!-- Header -->
@@ -1470,6 +1563,15 @@
             </div>
             
             <div class="projects-grid" id="projectsContainer">
+                <!-- Error message container -->
+                <div class="error-box" id="apiKeyError" style="display: none;">
+                    <h3><i class="fas fa-exclamation-triangle"></i> API Key Error</h3>
+                    <p>Your Supabase API key contains invalid characters that are causing database connection issues.</p>
+                    <p>Please ensure your API key only contains valid ISO-8859-1 characters.</p>
+                    <p><strong>Solution:</strong> Replace the placeholder keys with your actual keys from Supabase dashboard.</p>
+                    <p><strong>Note:</strong> The key should not contain any non-Latin characters.</p>
+                </div>
+                
                 <!-- Projects will be loaded here dynamically -->
                 <div class="loading-spinner">
                     <div class="spinner"></div>
@@ -1531,7 +1633,7 @@
                                 <span>95%</span>
                             </div>
                             <div class="skill-bar">
-                                <div class="skill-progress" style="width: 95%"></div>
+                                <div class="skill-progress" style="width: 95%"></极简>
                             </div>
                         </div>
                         <div class="skill-item">
@@ -1745,10 +1847,17 @@
                 <span>or</span>
                 <button class="btn btn-outline" id="browseBtn">Browse Files</button>
                 <input type="file" id="fileInput" class="file-input" accept="image/*" multiple>
+                <div class="upload-info" style="margin-top: 15px; font-size: 0.9rem;">
+                    <p>Max file size: 5MB</p>
+                    <p>Supported formats: JPG, PNG, GIF</p>
+                </div>
             </div>
             <div class="upload-preview" id="uploadPreview"></div>
             <div class="upload-progress">
                 <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="upload-status-container" id="uploadStatusContainer">
+                <!-- Upload status will be shown here -->
             </div>
             <button class="btn" id="uploadBtn" style="margin-top: 30px; width: 100%;">
                 <i class="fas fa-upload"></i> Upload Images
@@ -1781,22 +1890,16 @@
     </div>
 
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyD-6rVTLc48p9PNTbO8RnvZLWLsnl_6bF4",
-            authDomain: "davony-digital-portfolio.firebaseapp.com",
-            databaseURL: "https://davony-digital-portfolio-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "davony-digital-portfolio",
-            storageBucket: "davony-digital-portfolio.appspot.com",
-            messagingSenderId: "69215456044",
-            appId: "1:69215456044:web:8e5dd55df511ba436e3a89"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const storage = firebase.storage();
-        const portfolioRef = database.ref('portfolio');
+        // Supabase configuration - FIXED: Removed non-Latin characters
+        const SUPABASE_URL = 'https://whlaptxtlhtdorbpezif.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobGFwdHh0bGh0ZG9yYnBlemlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxMTg1NjMsImV4cCI6MjA3MDY5NDU2M30.o8-SiyQVqcgFJDwO0PMk9d1rnXLJ3AD6Xf6HsJsqsKk'; // Replace with your valid key
+        
+        // Service role key - MUST REPLACE WITH YOUR SERVICE ROLE KEY
+        const SUPABASE_ADMIN_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobGFwdHh0bGh0ZG9yYnBlemlmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTExODU2MywiZXhwIjoyMDcwNjk0NTYzfQ.SrrQ55PAYwyQy9lH_cBmy2tTk-hDcBp-kBnNOnJwKiU'; // Replace with your valid key
+        
+        // Create clients with proper initialization
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseAdmin = window.supabase.createClient(SUPABASE_URL, SUPABASE_ADMIN_KEY);
 
         // Initialize portfolio data
         let portfolioData = {
@@ -1830,6 +1933,7 @@
         const uploadPreview = document.getElementById('uploadPreview');
         const progressBar = document.getElementById('progressBar');
         const uploadBtn = document.getElementById('uploadBtn');
+        const uploadStatusContainer = document.getElementById('uploadStatusContainer');
         const editModeBtn = document.getElementById('editModeBtn');
         const publicModeBtn = document.getElementById('publicModeBtn');
         const lightbox = document.getElementById('lightbox');
@@ -1844,74 +1948,152 @@
         const cancelBtn = document.querySelector('.cancel-btn');
         const databaseStatus = document.getElementById('databaseStatus');
         const loadingSpinner = document.querySelector('.loading-spinner');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const apiKeyError = document.getElementById('apiKeyError');
 
         // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            setupFirebaseListeners();
+        document.addEventListener('DOMContentLoaded', async function() {
+            // First check if API keys are valid
+            if (SUPABASE_KEY.includes('YOUR_') || SUPABASE_ADMIN_KEY.includes('YOUR_')) {
+                console.error("Please replace the placeholder keys with your actual keys from Supabase dashboard");
+                databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Error: Missing API keys</span>';
+                apiKeyError.style.display = 'block';
+                loadingSpinner.style.display = 'none';
+                if (loadingScreen) loadingScreen.style.display = 'none';
+                return;
+            }
+            
+            // Validate API keys for non-Latin characters
+            if (!isValidLatin1(SUPABASE_KEY)) {
+                showApiKeyError("Supabase API key contains invalid characters");
+                return;
+            }
+            
+            if (!isValidLatin1(SUPABASE_ADMIN_KEY)) {
+                showApiKeyError("Supabase admin key contains invalid characters");
+                return;
+            }
+            
+            await setupSupabaseListeners();
             setupEventListeners();
             toggleEditMode(false);
+            // Hide loading screen once content is ready
+            setTimeout(() => {
+                if (loadingScreen) loadingScreen.style.display = 'none';
+            }, 1000);
         });
-
-        // Set up Firebase real-time listeners
-        function setupFirebaseListeners() {
-            // Listen for database connection status
-            database.ref('.info/connected').on('value', (snapshot) => {
-                if (snapshot.val() === true) {
-                    databaseStatus.classList.remove('status-disconnected');
-                    databaseStatus.classList.add('status-connected');
-                    databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Connected</span>';
-                } else {
-                    databaseStatus.classList.remove('status-connected');
-                    databaseStatus.classList.add('status-disconnected');
-                    databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Disconnected</span>';
+        
+        // Show API key error
+        function showApiKeyError(message) {
+            console.error(message);
+            databaseStatus.classList.remove('status-connected');
+            databaseStatus.classList.add('status-disconnected');
+            databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Error: ' + message + '</span>';
+            apiKeyError.style.display = 'block';
+            loadingSpinner.style.display = 'none';
+            if (loadingScreen) loadingScreen.style.display = 'none';
+        }
+        
+        // Validate string for Latin-1 characters
+        function isValidLatin1(str) {
+            for (let i = 0; i < str.length; i++) {
+                const charCode = str.charCodeAt(i);
+                if (charCode > 255) {
+                    return false;
                 }
-            });
+            }
+            return true;
+        }
 
-            // Listen for projects data changes
-            portfolioRef.child('projects').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    // Convert the object of projects to an array
-                    portfolioData.projects = Object.keys(data).map(key => ({
-                        id: key,
-                        ...data[key]
-                    }));
-                } else {
-                    portfolioData.projects = [];
-                }
+        // Set up Supabase real-time listeners
+        async function setupSupabaseListeners() {
+            try {
+                // Check database connection
+                const { data, error } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .limit(1);
                 
-                // Hide loading spinner once data is loaded
-                loadingSpinner.classList.add('hidden');
+                if (error) throw error;
+                
+                databaseStatus.classList.remove('status-disconnected');
+                databaseStatus.classList.add('status-connected');
+                databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Connected</span>';
+                
+                // Load initial projects
+                await loadProjects();
+                
+                // Set up real-time subscription
+                const subscription = supabase
+                    .channel('projects-channel')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'projects' }, payload => {
+                        // Handle changes
+                        loadProjects();
+                    })
+                    .subscribe();
+                
+            } catch (error) {
+                console.error('Database connection error:', error);
+                databaseStatus.classList.remove('status-connected');
+                databaseStatus.classList.add('status-disconnected');
+                databaseStatus.innerHTML = '<div class="status-icon"></div><span>Database Error: ' + error.message + '</span>';
+            }
+        }
+
+        // Load projects from Supabase
+        async function loadProjects() {
+            try {
+                const { data: projects, error } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                 portfolioData.projects = Array.isArray(projects) ? projects : [];
+
+                // Debug: Log the fetched projects
+                console.log("Fetched projects:", portfolioData.projects); 
+                
+                // Hide loading spinner
+                if (loadingSpinner) {
+                    loadingSpinner.classList.add('hidden');
+                }
                 renderProjects();
                 
-                // If we are in project details view, update that view too
+                // Update project details if open
                 if (currentProjectId) {
                     const project = portfolioData.projects.find(p => p.id === currentProjectId);
                     if (project) {
                         updateProjectDetailsView(project);
                     } else {
-                        // Project was deleted? Go back to portfolio
                         projectDetailsSection.classList.add('hidden');
                         portfolioSection.classList.remove('hidden');
                         currentProjectId = null;
                     }
                 }
-            });
+                
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                projectsContainer.innerHTML = '<p class="text-center">Error loading projects. Please try again later.</p>';
+            }
         }
 
         // Render projects
         function renderProjects() {
             projectsContainer.innerHTML = '';
             
-            if (portfolioData.projects.length === 0) {
-                projectsContainer.innerHTML = '<p class="text-center">No projects found. Add your first project!</p>';
-                return;
-            }
+            if (!portfolioData.projects || portfolioData.projects.length === 0) {
+        projectsContainer.innerHTML = '<p class="text-center">No projects found. Add your first project!</p>';
+        return;
+    }
             
             portfolioData.projects.forEach(project => {
-                const thumbnail = project.images && project.images.length > 0 ? 
-                    project.images[0].thumbnail || project.images[0].url : 
-                    'https://via.placeholder.com/300x200?text=No+Images';
+                const images = project.images || [];
+        
+        const thumbnail = images.length > 0 ? 
+            (images[0].thumbnail || images[0].url) : 
+            'https://via.placeholder.com/300x200?text=No+Images';
                 
                 const projectCard = document.createElement('div');
                 projectCard.className = 'project-card floating';
@@ -1991,120 +2173,274 @@
             projectDetailsSection.classList.remove('hidden');
         }
 
-        // Create project
-        function createProject(name, category) {
-            const newProject = {
-                name: name,
-                category: category,
-                createdDate: new Date().toISOString(),
-                images: []
-            };
-            
-            // Push to Firebase
-            const newProjectRef = portfolioRef.child('projects').push();
-            newProjectRef.set(newProject);
+        // Create project - Supabase version
+        async function createProject(name, category) {
+            try {
+                // Use supabaseAdmin to bypass RLS policy
+                const { data, error } = await supabaseAdmin
+                    .from('projects')
+                    .insert([
+                        { 
+                            name: name, 
+                            category: category, 
+                            images: [] 
+                        }
+                    ])
+                    .select();
+                
+                if (error) throw error;
+                
+                // Show success
+                alert('Project created successfully!');
+                
+            } catch (error) {
+                console.error('Error creating project:', error);
+                alert('Error creating project: ' + error.message);
+            }
         }
 
-        // Delete project
-        function deleteProject(projectId) {
-            portfolioRef.child('projects').child(projectId).remove();
+        // Delete project - Supabase version
+        async function deleteProject(projectId) {
+            try {
+                // Use supabaseAdmin to bypass RLS policy
+                const { error } = await supabaseAdmin
+                    .from('projects')
+                    .delete()
+                    .eq('id', projectId);
+                
+                if (error) throw error;
+                
+                // Remove any images from storage
+                const project = portfolioData.projects.find(p => p.id === projectId);
+                if (project && project.images) {
+                    for (const image of project.images) {
+                        try {
+                            const path = `portfolio/${projectId}/${image.name}`;
+                            await supabase.storage
+                                .from('portfolio')
+                                .remove([path]);
+                        } catch (storageError) {
+                            console.error('Error deleting image:', storageError);
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Error deleting project:', error);
+                alert('Error deleting project: ' + error.message);
+            }
         }
 
-        // Delete image
-        function deleteImage(projectId, imageId) {
-            const projectRef = portfolioRef.child('projects').child(projectId);
-            
-            projectRef.child('images').once('value', (snapshot) => {
-                const images = snapshot.val() || [];
-                const updatedImages = images.filter(img => img.id !== imageId);
-                projectRef.child('images').set(updatedImages);
-            });
+        // Delete image - Supabase version
+        async function deleteImage(projectId, imageId) {
+            try {
+                const project = portfolioData.projects.find(p => p.id === projectId);
+                if (!project) return;
+                
+                // Find the image to get its name
+                const image = project.images.find(img => img.id === imageId);
+                if (!image) return;
+                
+                // Remove image from storage
+                const path = `portfolio/${projectId}/${image.name}`;
+                await supabase.storage
+                    .from('portfolio')
+                    .remove([path]);
+                
+                // Update project to remove the image
+                const updatedImages = project.images.filter(img => img.id !== imageId);
+                
+                // Use supabaseAdmin to bypass RLS policy
+                const { error } = await supabaseAdmin
+                    .from('projects')
+                    .update({ images: updatedImages })
+                    .eq('id', projectId);
+                
+                if (error) throw error;
+                
+            } catch (error) {
+                console.error('Error deleting image:', error);
+                alert('Error deleting image: ' + error.message);
+            }
         }
 
-        // Upload images to Firebase Storage - FIXED VERSION
-        function uploadImages() {
+        // Upload images to Supabase Storage
+        async function uploadImages() {
             if (filesToUpload.length === 0) {
-                alert('Please select files to upload');
+                showUploadStatus('Please select files to upload', 'error');
                 return;
             }
             
             if (!currentProjectId) {
-                alert('No project selected');
+                showUploadStatus('No project selected', 'error');
                 return;
             }
             
-            const projectRef = portfolioRef.child('projects').child(currentProjectId);
-            const storageRef = storage.ref(`portfolio/${currentProjectId}`);
-            
-            projectRef.child('images').once('value', async (snapshot) => {
-                const currentImages = snapshot.val() || [];
+            try {
+                const project = portfolioData.projects.find(p => p.id === currentProjectId);
+                if (!project) {
+                    showUploadStatus('Project not found', 'error');
+                    return;
+                }
                 
-                try {
-                    // Disable upload button during upload
-                    uploadBtn.disabled = true;
-                    uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                // Disable upload button during upload
+                uploadBtn.disabled = true;
+                uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                
+                // Clear status container
+                uploadStatusContainer.innerHTML = '';
+                
+                // Reset progress
+                progressBar.style.width = '0%';
+                
+                // Track successful uploads
+                let successfulUploads = 0;
+                let currentImages = project.images || [];
+                
+                // Upload each file
+                for (let i = 0; i < filesToUpload.length; i++) {
+                    const file = filesToUpload[i];
                     
-                    // Upload each file to Firebase Storage
-                    for (let i = 0; i < filesToUpload.length; i++) {
-                        const file = filesToUpload[i];
-                        const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}_${file.name}`;
-                        const fileRef = storageRef.child(fileName);
+                    // Validate file
+                    if (!validateFile(file)) continue;
+                    
+                    // Create unique filename
+                    const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}_${file.name}`;
+                    const filePath = `portfolio/${currentProjectId}/${fileName}`;
+                    
+                    // Create status item
+                    const statusItem = createStatusItem(file.name, 'progress', 'Uploading...');
+                    
+                    try {
+                        // Upload file to Supabase storage
+                        const { data, error } = await supabase.storage
+                            .from('portfolio')
+                            .upload(filePath, file, {
+                                cacheControl: '3600',
+                                upsert: false
+                            });
                         
-                        // Create upload task
-                        const uploadTask = fileRef.put(file);
+                        if (error) throw error;
                         
-                        // Listen for state changes
-                        uploadTask.on('state_changed',
-                            (snapshot) => {
-                                // Update progress bar
-                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                                progressBar.style.width = progress + '%';
-                            },
-                            (error) => {
-                                console.error('Upload error:', error);
-                                alert(`Error uploading ${file.name}: ${error.message}`);
-                            }
-                        );
+                        // Get public URL
+                        const { data: urlData } = supabase.storage
+                            .from('portfolio')
+                            .getPublicUrl(filePath);
                         
-                        // Wait for upload to complete
-                        await uploadTask;
-                        
-                        // Get download URL
-                        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                        const publicUrl = urlData.publicUrl;
                         
                         // Add image metadata to project
                         currentImages.push({
                             id: 'img_' + Date.now() + Math.floor(Math.random() * 1000),
-                            name: file.name,
-                            url: downloadURL,
-                            thumbnail: downloadURL // Use same URL for thumbnail
+                            name: fileName,
+                            url: publicUrl,
+                            thumbnail: publicUrl
                         });
+                        
+                        // Update status
+                        updateStatusItem(statusItem, 'success', 'Upload successful');
+                        successfulUploads++;
+                        
+                    } catch (error) {
+                        console.error('Upload error:', error);
+                        updateStatusItem(statusItem, 'error', `Upload failed: ${error.message}`);
                     }
-                    
-                    // Update project with new images
-                    projectRef.child('images').set(currentImages);
-                    
-                    // Reset and close modal
-                    filesToUpload = [];
-                    uploadPreview.innerHTML = '';
-                    progressBar.style.width = '0%';
-                    closeModal(uploadModal);
-                    
-                    // Re-enable upload button
-                    uploadBtn.disabled = false;
-                    uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Images';
-                    
-                    alert('Images uploaded successfully!');
-                    
-                } catch (error) {
-                    console.error('Upload failed:', error);
-                    alert('Error uploading images: ' + error.message);
-                    
-                    // Re-enable upload button on error
-                    uploadBtn.disabled = false;
-                    uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Images';
                 }
-            });
+                
+                // If any uploads were successful, update the project
+                if (successfulUploads > 0) {
+                    try {
+                        // Use supabaseAdmin to bypass RLS policy
+                        const { error } = await supabaseAdmin
+                            .from('projects')
+                            .update({ images: currentImages })
+                            .eq('id', currentProjectId);
+                        
+                        if (error) throw error;
+                        
+                        showUploadStatus(`${successfulUploads} images uploaded successfully!`, 'success');
+                        
+                        // Close modal after 2 seconds
+                        setTimeout(() => {
+                            closeModal(uploadModal);
+                        }, 2000);
+                        
+                    } catch (error) {
+                        console.error('Error updating project:', error);
+                        showUploadStatus(`Error updating project: ${error.message}`, 'error');
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Upload failed:', error);
+                showUploadStatus(`Error: ${error.message}`, 'error');
+            } finally {
+                // Re-enable upload button
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Images';
+            }
+        }
+        
+        // Validate file before upload
+        function validateFile(file) {
+            // Check file size (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                const statusItem = createStatusItem(file.name, 'error', 'File too large (max 5MB)');
+                return false;
+            }
+            
+            // Check file type
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                const statusItem = createStatusItem(file.name, 'error', 'Invalid file type (only JPG, PNG, GIF)');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Create a status item for upload status container
+        function createStatusItem(fileName, status, message) {
+            const statusItem = document.createElement('div');
+            statusItem.className = `status-item status-${status}`;
+            statusItem.innerHTML = `
+                <div class="status-icon">
+                    ${status === 'success' ? '<i class="fas fa-check"></i>' : 
+                      status === 'error' ? '<i class="fas fa-times"></i>' : 
+                      '<i class="fas fa-sync fa-spin"></i>'}
+                </div>
+                <div class="status-info">
+                    <div class="status-file-name">${fileName}</div>
+                    <div class="status-message">${message}</div>
+                </div>
+            `;
+            uploadStatusContainer.appendChild(statusItem);
+            return statusItem;
+        }
+        
+        // Update status item
+        function updateStatusItem(item, status, message) {
+            item.className = `status-item status-${status}`;
+            const icon = item.querySelector('.status-icon');
+            icon.innerHTML = status === 'success' ? '<i class="fas fa-check"></i>' : 
+                            status === 'error' ? '<i class="fas fa-times"></i>' : 
+                            '<i class="fas fa-sync fa-spin"></i>';
+            item.querySelector('.status-message').textContent = message;
+        }
+        
+        // Show upload status message
+        function showUploadStatus(message, type) {
+            const statusItem = document.createElement('div');
+            statusItem.className = `status-item status-${type}`;
+            statusItem.innerHTML = `
+                <div class="status-icon">
+                    ${type === 'success' ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>'}
+                </div>
+                <div class="status-info">
+                    <div class="status-message">${message}</div>
+                </div>
+            `;
+            uploadStatusContainer.appendChild(statusItem);
         }
 
         // Setup event listeners
