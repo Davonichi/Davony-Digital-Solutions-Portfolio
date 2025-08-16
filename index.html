@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David Ehigbochie | Graphic Designer Portfolio</title>
+    <title>Davony Digital Solution | Graphic Designer Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+     <style>
         /* All CSS styles remain unchanged */
         :root {
             --primary: #2d3436;
@@ -743,9 +743,9 @@
         }
 
         .contact-form input:focus,
-        .contact-form textarea:focus {
+        .contact极简 textarea:focus {
             border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 极简.1);
             box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.2);
         }
 
@@ -795,7 +795,7 @@
         }
 
         .footer-links li {
-            margin-bottom: 15px;
+            margin-bottom: 15极简;
         }
 
         .footer-links a {
@@ -1310,7 +1310,7 @@
             text-align: center;
             max-width: 500px;
             width: 90%;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25极简 50px rgba(0, 0, 0, 0.5);
         }
         
         .confirmation-content h3 {
@@ -1501,12 +1501,6 @@
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loadingScreen" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#1e272e;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-        <div class="spinner"></div>
-        <p style="color:white;font-size:1.2rem;margin-top:20px;">Loading portfolio...</p>
-    </div>
-
     <!-- Header -->
     <header>
         <div class="container">
@@ -1552,15 +1546,11 @@
                 <button class="filter-btn active" data-filter="all">All Projects</button>
                 <button class="filter-btn" data-filter="logo">Logo Design</button>
                 <button class="filter-btn" data-filter="branding">Branding</button>
-                <button class="filter-btn" data-filter="web">Web Design</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
             </div>
             
             <div class="projects-grid" id="projectsContainer">
                 <!-- Projects will be loaded here dynamically -->
-                <div class="loading-spinner">
-                    <div class="spinner"></div>
-                    <p>Loading projects...</p>
-                </div>
             </div>
         </div>
     </section>
@@ -1598,7 +1588,7 @@
                 </div>
                 <div class="about-text">
                     <h3>Crafting Visual Experiences</h3>
-                    <p>With over 8 years of experience in the design industry, I specialize in creating compelling visual identities that resonate with audiences and communicate brand values effectively.</p>
+                    <p>With over 8 years of experience in the design industry. With a background in IT Enigineering, I specialize in creating compelling visual identities that resonate with audiences and communicate brand values effectively.</p>
                     <p>My approach combines strategic thinking with creative execution, ensuring that every design solution not only looks beautiful but also achieves measurable business results.</p>
                     
                     <div class="skills">
@@ -1626,7 +1616,7 @@
                                 <span>90%</span>
                             </div>
                             <div class="skill-bar">
-                                <div极简 class="skill-progress" style="width: 90%"></div>
+                                <div class="skill-progress" style="width: 90%"></div>
                             </div>
                         </div>
                         <div class="skill-item">
@@ -1662,12 +1652,12 @@
                     </div>
                     <h3>Brand Identity</h3>
                     <p>Complete branding packages including color schemes, typography, and brand guidelines.</p>
-                </极简div>
+                </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-laptop-code"></i>
                     </div>
-                    <h3>Web Design</h3>
+                    <h3>Web Development</h3>
                     <p>Beautiful, responsive website designs that provide excellent user experience.</p>
                 </div>
                 <div class="service-card">
@@ -1699,13 +1689,13 @@
                             <div class="contact-icon">
                                 <i class="fas fa-phone"></i>
                             </div>
-                            <span>+234 703-1874-290</span>
+                            <span>+234 703 1874 290</span>
                         </div>
                         <div class="contact-item">
                             <div class="contact-icon">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
-                            <span>Edo State, Nigeria</span>
+                            <span>Benin City, Edo State, Nigeria</span>
                         </div>
                     </div>
                     <h3>Connect With Me</h3>
@@ -1764,7 +1754,7 @@
                     <ul class="footer-links">
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Logo Design</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Brand Identity</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Web Design</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Web Development</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Print Design</a></li>
                     </ul>
                 </div>
@@ -1772,723 +1762,994 @@
         </div>
     </footer>
 
-    <!-- Admin Controls -->
-    <div class="admin-controls">
-        <div class="admin-btn" id="adminToggle">
-            <i class="fas fa-cog"></i>
-        </div>
-        <div class="admin-panel" id="adminPanel">
-            <h3>Admin Panel</h3>
-            <div style="margin-bottom: 20px;">
-                <button class="btn" id="addProjectBtn" style="width: 100%; margin-bottom: 15px;">
-                    <i class="fas fa-plus"></i> Add New Project
-                </button>
-            </div>
-            <div class="form-group">
-                <label>Admin Mode</label>
-                <div style="display: flex; gap: 10px; margin-top: 10px;">
-                    <button class="btn" id="editModeBtn" style="flex: 1;">Edit Mode</button>
-                    <button class="btn btn-outline" id="publicModeBtn" style="flex: 1;">Public View</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Project Modal -->
-    <div class="modal" id="projectModal">
-        <div class="modal-content">
-            <div class="close-modal">&times;</div>
-            <h3 class="modal-title">Add New Project</h3>
-            <form id="projectForm">
-                <div class="form-group">
-                    <label for="projectName">Project Name</label>
-                    <input type="text" id="projectName" required placeholder="Enter project name">
-                </div>
-                <div class="form-group">
-                    <label for="projectCategory">Category</label>
-                    <select id="projectCategory" required>
-                        <option value="">Select a category</option>
-                        <option value="logo">Logo Design</option>
-                        <option value="branding">Branding</option>
-                        <option value="web">Web Design</option>
-                        <option value="print">Print Design</option>
-                        <option value="packaging">Packaging</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn">Create Project</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Image Upload Modal -->
-    <div class="modal" id="uploadModal">
-        <div class="modal-content">
-            <div class="close-modal">&times;</div>
-            <h3 class="modal-title">Upload Images</h3>
-            <div class="file-upload" id="dropArea">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Drag & Drop your files here</p>
-                <span>or</span>
-                <button class="btn btn-outline" id="browseBtn">Browse Files</button>
-                <input type="file" id="fileInput" class="file-input" accept="image/*" multiple>
-                <div class="upload-info" style="margin-top: 15px; font-size: 0.9rem;">
-                    <p>Max file size: 5MB</p>
-                    <p>Supported formats: JPG, PNG, GIF</p>
-                </div>
-            </div>
-            <div class="upload-preview" id="uploadPreview"></div>
-            <div class="upload-progress">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <div class="upload-status-container" id="uploadStatusContainer">
-                <!-- Upload status will be shown here -->
-            </div>
-            <button class="btn" id="uploadBtn" style="margin-top: 30px; width: 100%;">
-                <i class="fas fa-upload"></i> Upload Images
-            </button>
-        </div>
-    </div>
-
-    <!-- Confirmation Modal -->
-    <div class="confirmation-modal" id="confirmationModal">
-        <div class="confirmation-content">
-            <h3 id="confirmTitle">Confirm Action</h3>
-            <p id="confirmMessage">Are you sure you want to perform this action?</p>
-            <div class="confirmation-buttons">
-                <button class="cancel-btn">Cancel</button>
-                <button class="confirm-btn">Confirm</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
-            <span class="lightbox-close">&times;</span>
+            <span class="lightbox-close" id="lightboxClose">&times;</span>
             <img class="lightbox-img" id="lightboxImage" src="" alt="">
             <div class="lightbox-nav">
                 <div class="lightbox-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></div>
                 <div class="lightbox-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></div>
             </div>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
         </div>
     </div>
 
     <script>
-    // Initialize portfolio data
-    let portfolioData = {
-        projects: []
-    };
+        // Portfolio Data Structure
+        let portfolioData = {
+            projects: [
+                {
+                    id: 'proj1',
+                    name: 'Dreamswork Africa',
+                    category: 'Branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img1',
+                            name: 'dream1.jpg',
+                            data: 'images/dream1.jpg',
+                            thumbnail: 'images/dream1.jpg'
+                        },
+                        {
+                            id: 'img2',
+                            name: 'dream2.jpg',
+                            data: 'images/dream2.jpg',
+                            thumbnail: 'images/dream2.jpg'
+                        },
+                        {
+                            id: 'img3',
+                            name: 'dream3.jpg',
+                            data: 'images/dream3.jpg',
+                            thumbnail: 'images/dream3.jpg'
+                        },
+                        {
+                            id: 'img4',
+                            name: 'dream4.jpg',
+                            data: 'images/dream4.jpg',
+                            thumbnail: 'images/dream4.jpg'
+                        },
+                        {
+                            id: 'img5',
+                            name: 'dream5.jpg',
+                            data: 'images/dream5.jpg',
+                            thumbnail: 'images/dream5.jpg'
+                        },
+                        {
+                            id: 'img6',
+                            name: 'dream6.jpg',
+                            data: 'images/dream6.jpg',
+                            thumbnail: 'images/dream6.jpg'
+                        },
+                        {
+                            id: 'img7',
+                            name: 'dream7.jpg',
+                            data: 'images/dream7.jpg',
+                            thumbnail: 'images/dream7.jpg'
+                        },
+                        {
+                            id: 'img8',
+                            name: 'dream8.jpg',
+                            data: 'images/dream8.jpg',
+                            thumbnail: 'images/dream8.jpg'
+                        },
+                        {
+                            id: 'img9',
+                            name: 'dream9.jpg',
+                            data: 'images/dream9.jpg',
+                            thumbnail: 'images/dream9.jpg'
+                        },
+                        {
+                            id: 'img10',
+                            name: 'dream10.jpg',
+                            data: 'images/dream10.jpg',
+                            thumbnail: 'images/dream10.jpg'
+                        },
+                        {
+                            id: 'img11',
+                            name: 'dream11.jpg',
+                            data: 'images/dream11.jpg',
+                            thumbnail: 'images/dream11.jpg'
+                        },
+                        {
+                            id: 'img12',
+                            name: 'dream12.jpg',
+                            data: 'images/dream12.jpg',
+                            thumbnail: 'images/dream12.jpg'
+                        },
+                        {
+                            id: 'img13',
+                            name: 'dream13.jpg',
+                            data: 'images/dream13.jpg',
+                            thumbnail: 'images/dream13.jpg'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj2',
+                    name: 'Sola Okunkpolor',
+                    category: 'Branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {                            
+                            id: 'img14',
+                            name: 'sola1.jpg',
+                            data: 'images/sola1.jpg',
+                            thumbnail: 'images/sola1.jpg'
+                        },
+                        {                            
+                            id: 'img15',
+                            name: 'sola2.jpg',
+                            data: 'images/sola2.jpg',
+                            thumbnail: 'images/sola2.jpg'
+                        },
+                        {                            
+                            id: 'img16',
+                            name: 'sola3.jpg',
+                            data: 'images/sola3.jpg',
+                            thumbnail: 'images/sola3.jpg'
+                        },
+                        {                            
+                            id: 'img17',
+                            name: 'sola4.jpg',
+                            data: 'images/sola4.jpg',
+                            thumbnail: 'images/sola4.jpg'
+                        },
+                        {                            
+                            id: 'img18',
+                            name: 'sola5.jpg',
+                            data: 'images/sola5.jpg',
+                            thumbnail: 'images/sola5.jpg'
+                        },
+                        {                            
+                            id: 'img19',
+                            name: 'sola6.jpg',
+                            data: 'images/sola6.jpg',
+                            thumbnail: 'images/sola6.jpg'
+                        },
+                        {                            
+                            id: 'img20',
+                            name: 'sola7.jpg',
+                            data: 'images/sola7.jpg',
+                            thumbnail: 'images/sola7.jpg'
+                        },
+                        {                            
+                            id: 'img21',
+                            name: 'sola8.jpg',
+                            data: 'images/sola8.jpg',
+                            thumbnail: 'images/sola8.jpg'
+                        },
+                        {
+                            id: 'img22',
+                            name: 'sola9.jpg',
+                            data: 'images/sola9.jpg',
+                            thumbnail: 'images/sola9.jpg'
+                        },
+                        {
+                            id: 'img23',
+                            name: 'sola10.jpg',
+                            data: 'images/sola10.jpg',
+                            thumbnail: 'images/sola10.jpg'
+                        },
+                        {
+                            id: 'img24',
+                            name: 'sola11.jpg',
+                            data: 'images/sola11.jpg',
+                            thumbnail: 'images/sola11.jpg'
+                        }
+                    ]                    
+                },
+                {
+                    id: 'proj3',
+                    name: 'Mid-West Engineering',
+                    category: 'Branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                        id: 'img25',
+                        name: 'mid1.jpg',
+                        data: 'images/mid1.jpg',
+                        thumbnail: 'images/mid1.jpg'
+                    },
+                    {
+                        id: 'img26',
+                        name: 'mid2.jpg',
+                        data: 'images/mid2.jpg',
+                        thumbnail: 'images/mid2.jpg'
+                    },
+                    {
+                        id: 'img27',
+                        name: 'mid3.jpg',
+                        data: 'images/mid3.jpg',
+                        thumbnail: 'images/mid3.jpg'
+                    },
+                    {
+                        id: 'img28',
+                        name: 'mid4.jpg',
+                        data: 'images/mid4.jpg',
+                        thumbnail: 'images/mid4.jpg'
+                    },
+                    {
+                        id: 'img29',
+                        name: 'mid5.jpg',
+                        data: 'images/mid5.jpg',
+                        thumbnail: 'images/mid5.jpg'
+                    }
+                    ]
+                },
+                {
+                    id: 'proj4',
+                    name: 'American Associatez',
+                    category: 'Branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                        id: 'img30',
+                        name: 'ame1.jpg',
+                        data: 'images/ame1.jpg',
+                        thumbnail: 'images/ame1.jpg'
+                    },
+                    {
+                        id: 'img31',
+                        name: 'ame2.jpg',
+                        data: 'images/ame2.jpg',
+                        thumbnail: 'images/ame2.jpg'
+                    },
+                    {
+                        id: 'img32',
+                        name: 'ame3.jpg',
+                        data: 'images/ame3.jpg',
+                        thumbnail: 'images/ame3.jpg'
+                    },
+                    {
+                        id: 'img33',
+                        name: 'ame4.jpg',
+                        data: 'images/ame4.jpg',
+                        thumbnail: 'images/ame4.jpg'
+                    },
+                    {
+                        id: 'img34',
+                        name: 'ame5.jpg',
+                        data: 'images/ame5.jpg',
+                        thumbnail: 'images/ame5.jpg'
+                    },
+                    {
+                        id: 'img35',
+                        name: 'ame6.jpg',
+                        data: 'images/ame6.jpg',
+                        thumbnail: 'images/ame6.jpg'
+                    },
+                    {
+                        id: 'img36',
+                        name: 'ame7.jpg',
+                        data: 'images/ame7.jpg',
+                        thumbnail: 'images/ame7.jpg'
+                    },
+                    {
+                        id: 'img37',
+                        name: 'ame8.jpg',
+                        data: 'images/ame8.jpg',
+                        thumbnail: 'images/ame8.jpg'
+                    }
+                    ]
+                },
+                {
+                    id: 'proj5',
+                    name: 'Noramor',
+                    category: 'Print Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                        id: 'img38',
+                        name: 'nor1.jpg',
+                        data: 'images/nor1.jpg',
+                        thumbnail: 'images/nor1.jpg'
+                    },
+                    {
+                        id: 'img39',
+                        name: 'nor2.jpg',
+                        data: 'images/nor2.jpg',
+                        thumbnail: 'images/nor2.jpg'
+                    },
+                    {
+                        id: 'img40',
+                        name: 'nor3.jpg',
+                        data: 'images/nor3.jpg',
+                        thumbnail: 'images/nor3.jpg'
+                    },
+                    {
+                        id: 'img41',
+                        name: 'nor4.jpg',
+                        data: 'images/nor4.jpg',
+                        thumbnail: 'images/nor4.jpg'
+                    }
+                    ]
+                },
+                {
+                    id: 'proj6',
+                    name: 'Talk2dappa',
+                    category: 'Branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img42',
+                            name: 'talk1.jpg',
+                            data: 'images/talk1.jpg',
+                            thumbnail: 'images/talk1.jpg'
+                        },
+                        {
+                            id: 'img43',
+                            name: 'talk2.jpg',
+                            data: 'images/talk2.jpg',
+                            thumbnail: 'images/talk2.jpg'
+                        },
+                        {
+                            id: 'img44',
+                            name: 'talk3.jpg',
+                            data: 'images/talk3.jpg',
+                            thumbnail: 'images/talk3.jpg'
+                        },
+                        {
+                            id: 'img45',
+                            name: 'talk4.jpg',
+                            data: 'images/talk4.jpg',
+                            thumbnail: 'images/talk4.jpg'
+                        },
+                        {
+                            id: 'img46',
+                            name: 'talk5.jpg',
+                            data: 'images/talk5.jpg',
+                            thumbnail: 'images/talk5.jpg'
+                        },
+                        {
+                            id: 'img47',
+                            name: 'talk6.jpg',
+                            data: 'images/talk6.jpg',
+                            thumbnail: 'images/talk6.jpg'
+                        },
+                        {
+                            id: 'img48',
+                            name: 'talk7.jpg',
+                            data: 'images/talk7.jpg',
+                            thumbnail: 'images/talk7.jpg'
+                        },
+                        {
+                            id: 'img49',
+                            name: 'talk8.jpg',
+                            data: 'images/talk8.jpg',
+                            thumbnail: 'images/talk8.jpg'
+                        },
+                        {
+                            id: 'img50',
+                            name: 'talk9.jpg',
+                            data: 'images/talk9.jpg',
+                            thumbnail: 'images/talk9.jpg'
+                        },
+                        {
+                            id: 'img51',
+                            name: 'talk10.jpg',
+                            data: 'images/talk10.jpg',
+                            thumbnail: 'images/talk10.jpg'
+                        },
+                        {
+                            id: 'img52',
+                            name: 'talk11.jpg',
+                            data: 'images/talk11.jpg',
+                            thumbnail: 'images/talk11.jpg'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj7',
+                    name: 'Gillingsworth Realtors',
+                    category: 'Branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img51',
+                            name: 'gill1.jpg',
+                            data: 'images/gill1.jpg',
+                            thumbnail: 'images/gill1.jpg'
+                        },
+                        {
+                            id: 'img52',
+                            name: 'gill2.jpg',
+                            data: 'images/gill2.jpg',
+                            thumbnail: 'images/gill2.jpg'
+                        },
+                        {
+                            id: 'img53',
+                            name: 'gill3.jpg',
+                            data: 'images/gill3.jpg',
+                            thumbnail: 'images/gill3.jpg'
+                        },
+                        {
+                            id: 'img54',
+                            name: 'gill4.jpg',
+                            data: 'images/gill4.jpg',
+                            thumbnail: 'images/gill4.jpg'
+                        },
+                        {
+                            id: 'img55',
+                            name: 'gill5.jpg',
+                            data: 'images/gill5.jpg',
+                            thumbnail: 'images/gill5.jpg'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj8',
+                    name: 'House on the Rock Benin',
+                    category: 'Print Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                        id: 'img56',
+                        name: 'hotr1.jpg',
+                        data: 'images/hotr1.jpg',
+                        thumbnail: 'images/hotr1.jpg'
+                    },
+                    {
+                        id: 'img57',
+                        name: 'hotr2.jpg',
+                        data: 'images/hotr2.jpg',
+                        thumbnail: 'images/hotr2.jpg'
+                    },
+                    {
+                        id: 'img58',
+                        name: 'hotr3.jpg',
+                        data: 'images/hotr3.jpg',
+                        thumbnail: 'images/hotr3.jpg'
+                    },
+                    {
+                        id: 'img59',
+                        name: 'hotr4.jpg',
+                        data: 'images/hotr4.jpg',
+                        thumbnail: 'images/hotr4.jpg'
+                    }
+                    ]                    
+                },
+                {
+                    id: 'proj9',
+                    name: 'Ada Apparel',
+                    category: 'Logo Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                     {
+                        id: 'img60',
+                        name: 'ada1.jpg',
+                        data: 'images/ada1.jpg',
+                        thumbnail: 'images/ada1.jpg'
+                    },
+                    {
+                        id: 'img61',
+                        name: 'ada2.jpg',
+                        data: 'images/ada2.jpg',
+                        thumbnail: 'images/ada2.jpg'
+                    },
+                    {
+                        id: 'img62',
+                        name: 'ada3.jpg',
+                        data: 'images/ada3.jpg',
+                        thumbnail: 'images/ada3.jpg'
+                    },
+                    {
+                        id: 'img63',
+                        name: 'ada4.jpg',
+                        data: 'images/ada4.jpg',
+                        thumbnail: 'images/ada4.jpg'
+                    }
+                    ]
+                },
+                {
+                    id: 'proj10',
+                    name: '714 Couture',
+                    category: 'Print Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                        id: 'img64',
+                        name: '7141.jpg',
+                        data: 'images/7141.jpg',
+                        thumbnail: 'images/7141.jpg'
+                    },
+                    {
+                        id: 'img65',
+                        name: '7142.jpg',
+                        data: 'images/7142.jpg',
+                        thumbnail: 'images/7142.jpg'                    
+                    }
+                    ]
+                },
+                {
+                    id: 'proj11',
+                    name: 'De-City of Hope',
+                    category: 'Print Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                        id: 'img66',
+                        name: 'de1.jpg',
+                        data: 'images/de1.jpg',
+                        thumbnail: 'images/de1.jpg'
+                    },
+                    {
+                        id: 'img67',
+                        name: 'de2.jpg',
+                        data: 'images/de2.jpg',
+                        thumbnail: 'images/de2.jpg'
+                    },
+                    {
+                        id: 'img68',
+                        name: 'de3.jpg',
+                        data: 'images/de3.jpg',
+                        thumbnail: 'images/de3.jpg'
+                    },
+                    {
+                        id: 'img69',
+                        name: 'de4.jpg',
+                        data: 'images/de4.jpg',
+                        thumbnail: 'images/de4.jpg'
+                    }
+                    ]
+                },
+                {
+                    id: 'proj12',
+                    name: 'Emerald & Topaz',
+                    category: 'Logo Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img69',
+                            name: 'eme1.jpg',
+                            data: 'images/eme1.jpg',
+                            thumbnail: 'images/eme1.jpg'
+                        },
+                        {
+                            id: 'img70',
+                            name: 'eme2.jpg',
+                            data: 'images/eme2.jpg',
+                            thumbnail: 'images/eme2.jpg'
+                        },
+                        {
+                            id: 'img701',
+                            name: 'eme3.jpg',
+                            data: 'images/eme3.jpg',
+                            thumbnail: 'images/eme3.jpg'
+                        },
+                        {
+                            id: 'img702',
+                            name: 'eme4.jpg',
+                            data: 'images/eme4.jpg',
+                            thumbnail: 'images/eme4.jpg'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj13',
+                    name: 'Gigant Wedding',
+                    category: 'Logo Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img71',
+                            name: 'gig1.jpg',
+                            data: 'images/gig1.jpg',
+                            thumbnail: 'images/gig1.jpg'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj14',
+                    name: 'Luxe Strand',
+                    category: 'Logo Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img72',
+                            name: 'lux1.jpg',
+                            data: 'images/lux1.jpg',
+                            thumbnail: 'images/lux1.jpg'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj15',
+                    name: 'Osinbajo Campaign',
+                    category: 'Print Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                    {
+                        id: 'img73',
+                        name: 'osi1.jpg',
+                        data: 'images/osi1.jpg',
+                        thumbnail: 'images/osi1.jpg'
+                    },
+                    {
+                        id: 'img74',
+                        name: 'osi2.jpg',
+                        data: 'images/osi2.jpg',
+                        thumbnail: 'images/osi2.jpg'
+                    },
+                    {
+                        id: 'img75',
+                        name: 'osi3.jpg',
+                        data: 'images/osi3.jpg',
+                        thumbnail: 'images/osi3.jpg'
+                    }
+                    ]                    
+                },
+                {
+                    id: 'proj16',
+                    name: 'Joyce Hair',
+                    category: 'Branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                    {
+                        id: 'img76',
+                        name: 'joy1.jpg',
+                        data: 'images/joy1.jpg',
+                        thumbnail: 'images/joy1.jpg'
+                    },
+                    {
+                        id: 'img77',
+                        name: 'joy2.jpg',
+                        data: 'images/joy2.jpg',
+                        thumbnail: 'images/joy2.jpg'
+                    },
+                    {
+                        id: 'img78',
+                        name: 'joy3.jpg',
+                        data: 'images/joy3.jpg',
+                        thumbnail: 'images/joy3.jpg'
+                    },
+                    {
+                        id: 'img79',
+                        name: 'joy4.jpg',
+                        data: 'images/joy4.jpg',
+                        thumbnail: 'images/joy4.jpg'
+                    }
+                    ]
+                },
+                {
+                    id: 'proj17',
+                    name: 'T3P',
+                    category: 'Branding',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                    {
+                        id: 'img80',
+                        name: 't3p1.jpg',
+                        data: 'images/t3p1.jpg',
+                        thumbnail: 'images/t3p1.jpg'
+                    },
+                    {
+                        id: 'img81',
+                        name: 't3p2.jpg',
+                        data: 'images/t3p2.jpg',
+                        thumbnail: 'images/t3p2.jpg'
+                    },
+                    {
+                        id: 'img82',
+                        name: 't3p3.jpg',
+                        data: 'images/t3p3.jpg',
+                        thumbnail: 'images/t3p3.jpg'
+                    },
+                    {
+                        id: 'img83',
+                        name: 't3p4.jpg',
+                        data: 'images/t3p4.jpg',
+                        thumbnail: 'images/t3p4.jpg'
+                    },
+                    {
+                        id: 'img84',
+                        name: 't3p5.jpg',
+                        data: 'images/t3p5.jpg',
+                        thumbnail: 'images/t3p5.jpg'
+                    }
+                    ]
+                },
+                {
+                    id: 'proj18',
+                    name: 'Style and Gadget',
+                    category: 'Logo Design',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                        id: 'img85',
+                        name: 'sty1.jpg',
+                        data: 'images/sty1.jpg',
+                        thumbnail: 'images/sty1.jpg'
+                    }
+                    ]
+                },
+                {
+                    id: 'proj19',
+                    name: 'AI Code Tutor',
+                    category: 'Web Development',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img86',
+                            name: 'ai1.jpg',
+                            data: 'images/ai1.jpg',
+                            thumbnail: 'images/ai1.jpg'
+                        }
+                    ]
+                },
+                {
+                    id: 'proj20',
+                    name: 'Davony Digital Solution',
+                    category: 'Web Development',
+                    createdDate: new Date().toISOString(),
+                    images: [
+                        {
+                            id: 'img87',
+                            name: 'dav1.jpg',
+                            data: 'images/dav1.jpg',
+                            thumbnail: 'images/dav1.jpg'
+                        }
+                    ]
+                }
+            ]
+        };
 
-    // Current state variables
-    let currentProjectId = null;
-    let filesToUpload = [];
-    let isEditMode = false;
-    let currentConfirmCallback = null;
-
-    // DOM Elements
-    const projectsContainer = document.getElementById('projectsContainer');
-    const projectDetailsSection = document.getElementById('projectDetails');
-    const portfolioSection = document.getElementById('portfolio');
-    const projectImagesContainer = document.getElementById('projectImagesContainer');
-    const projectDetailTitle = document.getElementById('projectDetailTitle');
-    const projectDetailCategory = document.getElementById('projectDetailCategory');
-    const projectImagesCount = document.getElementById('projectImagesCount');
-    const backToProjectsBtn = document.getElementById('backToProjects');
-    const adminToggle = document.getElementById('adminToggle');
-    const adminPanel = document.getElementById('adminPanel');
-    const addProjectBtn = document.getElementById('addProjectBtn');
-    const projectModal = document.getElementById('projectModal');
-    const projectForm = document.getElementById('projectForm');
-    const uploadModal = document.getElementById('uploadModal');
-    const dropArea = document.getElementById('dropArea');
-    const fileInput = document.getElementById('fileInput');
-    const browseBtn = document.getElementById('browseBtn');
-    const uploadPreview = document.getElementById('uploadPreview');
-    const progressBar = document.getElementById('progressBar');
-    const uploadBtn = document.getElementById('uploadBtn');
-    const uploadStatusContainer = document.getElementById('uploadStatusContainer');
-    const editModeBtn = document.getElementById('editModeBtn');
-    const publicModeBtn = document.getElementById('publicModeBtn');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxClose = document.querySelector('.lightbox-close');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const confirmationModal = document.getElementById('confirmationModal');
-    const confirmTitle = document.getElementById('confirmTitle');
-    const confirmMessage = document.getElementById('confirmMessage');
-    const confirmBtn = document.querySelector('.confirm-btn');
-    const cancelBtn = document.querySelector('.cancel-btn');
-    const loadingScreen = document.getElementById('loadingScreen');
-
-    // Initialize the app
-    document.addEventListener('DOMContentLoaded', function() {
-        // Load projects from localStorage
-        loadProjects();
-        setupEventListeners();
-        toggleEditMode(false);
+        // Current state variables
+        let currentProjectId = null;
+        let isEditMode = false;
         
-        setTimeout(() => {
-            if (loadingScreen) loadingScreen.style.display = 'none';
-        }, 1000);
-    });
+        // Lightbox state
+        let currentImageIndex = 0;
+        let currentProjectImages = [];
 
-    // Load projects from localStorage
-    function loadProjects() {
-        const savedProjects = localStorage.getItem('portfolioProjects');
-        if (savedProjects) {
-            portfolioData.projects = JSON.parse(savedProjects);
-        }
-        renderProjects();
-    }
-
-    // Save projects to localStorage
-    function saveProjects() {
-        localStorage.setItem('portfolioProjects', JSON.stringify(portfolioData.projects));
-    }
-
-    // Render projects
-    function renderProjects() {
-        projectsContainer.innerHTML = '';
+        // DOM Elements
+        const projectsContainer = document.getElementById('projectsContainer');
+        const projectDetailsSection = document.getElementById('projectDetails');
+        const portfolioSection = document.getElementById('portfolio');
+        const projectImagesContainer = document.getElementById('projectImagesContainer');
+        const projectDetailTitle = document.getElementById('projectDetailTitle');
+        const projectDetailCategory = document.getElementById('projectDetailCategory');
+        const projectImagesCount = document.getElementById('projectImagesCount');
+        const backToProjectsBtn = document.getElementById('backToProjects');
         
-        if (!portfolioData.projects || portfolioData.projects.length === 0) {
-            projectsContainer.innerHTML = '<p class="text-center">No projects found. Add your first project!</p>';
-            return;
-        }
-        
-        portfolioData.projects.forEach(project => {
-            const images = project.images || [];
-            const thumbnail = images.length > 0 ? images[0].url : 'https://via.placeholder.com/300x200?text=No+Images';
-            
-            const projectCard = document.createElement('div');
-            projectCard.className = 'project-card floating';
-            projectCard.dataset.projectId = project.id;
-            projectCard.innerHTML = `
-                <div class="project-img">
-                    <img src="${thumbnail}" alt="${project.name}">
-                </div>
-                <div class="project-info">
-                    <span class="project-category">${getCategoryName(project.category)}</span>
-                    <h3>${project.name}</h3>
-                    <p class="project-images-count"><i class="fas fa-image"></i> ${images.length} ${images.length === 1 ? 'image' : 'images'}</p>
-                </div>
-                <div class="project-actions" style="opacity: ${isEditMode ? '1' : '0'}">
-                    <button class="action-btn add" data-action="add-images">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <button class="action-btn delete" data-action="delete-project">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `;
-            
-            projectsContainer.appendChild(projectCard);
+        // Lightbox elements
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
         });
-    }
 
-    // Update project details view
-    function updateProjectDetailsView(project) {
-        projectDetailTitle.textContent = project.name;
-        projectDetailCategory.textContent = getCategoryName(project.category);
-        projectImagesCount.textContent = `${project.images?.length || 0} ${project.images?.length === 1 ? 'image' : 'images'}`;
-        
-        projectImagesContainer.innerHTML = '';
-        
-        if (!project.images || project.images.length === 0) {
-            projectImagesContainer.innerHTML = '<p class="text-center">No images in this project yet.</p>';
-        } else {
-            project.images.forEach(image => {
-                const imageItem = document.createElement('div');
-                imageItem.className = 'image-item';
-                imageItem.dataset.imageId = image.id;
-                imageItem.innerHTML = `
-                    <img src="${image.url}" alt="${image.name}">
-                    <div class="image-actions" style="opacity: ${isEditMode ? '1' : '0'}">
-                        <div class="image-delete" data-action="delete-image">
-                            <i class="fas fa-times"></极简>
-                        </div>
+        function initApp() {
+            // Load and display projects
+            renderProjects();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        function renderProjects() {
+            projectsContainer.innerHTML = '';
+            
+            portfolioData.projects.forEach(project => {
+                const thumbnail = project.images.length > 0 ? 
+                    project.images[0].thumbnail : 
+                    'https://via.placeholder.com/300x200?text=No+Images';
+                
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card floating';
+                projectCard.dataset.projectId = project.id;
+                projectCard.innerHTML = `
+                    <div class="project-img">
+                        <img src="${thumbnail}" alt="${project.name}">
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">${getCategoryName(project.category)}</span>
+                        <h3>${project.name}</h3>
+                        <p class="project-images-count"><i class="fas fa-image"></i> ${project.images.length} images</p>
                     </div>
                 `;
-                projectImagesContainer.appendChild(imageItem);
+                
+                projectsContainer.appendChild(projectCard);
             });
         }
-    }
 
-    function getCategoryName(category) {
-        const categories = {
-            'logo': 'Logo Design',
-            'branding': 'Branding',
-            'web': 'Web Design',
-            'print': 'Print Design',
-            'packaging': 'Packaging'
-        };
-        return categories[category] || category;
-    }
-
-    function viewProjectDetails(projectId) {
-        const project = portfolioData.projects.find(p => p.id === projectId);
-        if (!project) return;
-        
-        currentProjectId = projectId;
-        updateProjectDetailsView(project);
-        
-        portfolioSection.classList.add('hidden');
-        projectDetailsSection.classList.remove('hidden');
-    }
-
-    // Create project
-    function createProject(name, category) {
-        const newProject = {
-            id: 'project_' + Date.now(),
-            name: name,
-            category: category,
-            images: [],
-            createdAt: new Date().toISOString()
-        };
-        
-        portfolioData.projects.push(newProject);
-        saveProjects();
-        renderProjects();
-        alert('Project created successfully!');
-    }
-
-    // Delete project
-    function deleteProject(projectId) {
-        portfolioData.projects = portfolioData.projects.filter(p => p.id !== projectId);
-        saveProjects();
-        renderProjects();
-        
-        // Close details if viewing deleted project
-        if (currentProjectId === projectId) {
-            projectDetailsSection.classList.add('hidden');
-            portfolioSection.classList.remove('hidden');
-            currentProjectId = null;
-        }
-    }
-
-    // Delete image
-    function deleteImage(projectId, imageId) {
-        const project = portfolioData.projects.find(p => p.id === projectId);
-        if (!project) return;
-        
-        project.images = project.images.filter(img => img.id !== imageId);
-        saveProjects();
-        updateProjectDetailsView(project);
-    }
-
-    // Upload images to localStorage
-    function uploadImages() {
-        if (filesToUpload.length === 0) {
-            showUploadStatus('Please select files to upload', 'error');
-            return;
-        }
-        
-        if (!currentProjectId) {
-            showUploadStatus('No project selected', 'error');
-            return;
-        }
-        
-        const project = portfolioData.projects.find(p => p.id === currentProjectId);
-        if (!project) {
-            showUploadStatus('Project not found', 'error');
-            return;
-        }
-        
-        uploadBtn.disabled = true;
-        uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-        uploadStatusContainer.innerHTML = '';
-        
-        let successfulUploads = 0;
-        
-        for (let i = 0; i < filesToUpload.length; i++) {
-            const file = filesToUpload[i];
-            
-            if (!validateFile(file)) continue;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const image = {
-                    id: 'img_' + Date.now() + i,
-                    name: file.name,
-                    url: e.target.result,
-                    size: file.size,
-                    type: file.type
-                };
-                
-                project.images.push(image);
-                successfulUploads++;
-                
-                if (successfulUploads === filesToUpload.length) {
-                    saveProjects();
-                    showUploadStatus(`${successfulUploads} images uploaded successfully!`, 'success');
-                    
-                    setTimeout(() => {
-                        closeModal(uploadModal);
-                        updateProjectDetailsView(project);
-                    }, 2000);
-                }
+        function getCategoryName(category) {
+            const categories = {
+                'logo': 'Logo Design',
+                'branding': 'Branding',
+                'web': 'Web Development',
+                'print': 'Print Design',
+                'packaging': 'Packaging'
             };
-            reader.readAsDataURL(file);
+            return categories[category] || category;
         }
-        
-        uploadBtn.disabled = false;
-        uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Images';
-    }
-    
-    function validateFile(file) {
-        if (file.size > 5 * 1024 * 1024) {
-            createStatusItem(file.name, 'error', 'File too large (max 5MB)');
-            return false;
-        }
-        
-        const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        if (!validTypes.includes(file.type)) {
-            createStatusItem(file.name, 'error', 'Invalid file type (only JPG, PNG, GIF)');
-            return false;
-        }
-        
-        return true;
-    }
-    
-    function createStatusItem(fileName, status, message) {
-        const statusItem = document.createElement('div');
-        statusItem.className = `status-item status-${status}`;
-        statusItem.innerHTML = `
-            <div class="status-icon">
-                ${status === 'success' ? '<i class="fas fa-check"></i>' : 
-                  status === 'error' ? '<i class="fas fa-times"></i>' : 
-                  '<i class="fas fa-sync fa-spin"></i>'}
-            </div>
-            <div class="status-info">
-                <div class="status-file-name">${fileName}</div>
-                <div class="status-message">${message}</div>
-            </div>
-        `;
-        uploadStatusContainer.appendChild(statusItem);
-        return statusItem;
-    }
-    
-    function showUploadStatus(message, type) {
-        const statusItem = document.createElement('div');
-        statusItem.className = `status-item status-${type}`;
-        statusItem.innerHTML = `
-            <div class="status-icon">
-                ${type === 'success' ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>'}
-            </div>
-            <div class="status-info">
-                <div class="status-message">${message}</div>
-            </div>
-        `;
-        uploadStatusContainer.appendChild(statusItem);
-    }
 
-    // Setup event listeners
-    function setupEventListeners() {
-        // Navigation
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
-        
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.querySelector('.hamburger').classList.remove('active');
-                document.querySelector('.nav-links').classList.remove('active');
-            });
-        });
-        
-        // Admin panel toggle
-        adminToggle.addEventListener('click', function() {
-            adminPanel.classList.toggle('active');
-        });
-        
-        // Toggle edit mode
-        editModeBtn.addEventListener('click', function() {
-            toggleEditMode(true);
-            adminPanel.classList.remove('active');
-        });
-        
-        publicModeBtn.addEventListener('click', function() {
-            toggleEditMode(false);
-            adminPanel.classList.remove('active');
-        });
-        
-        // Add project modal
-        addProjectBtn.addEventListener('click', function() {
-            projectForm.reset();
-            openModal(projectModal);
-        });
-        
-        // Project form submission
-        projectForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('projectName').value;
-            const category = document.getElementById('projectCategory').value;
+        function viewProjectDetails(projectId) {
+            const project = portfolioData.projects.find(p => p.id === projectId);
+            if (!project) return;
             
-            createProject(name, category);
-            closeModal(projectModal);
-        });
-        
-        // Back to projects
-        backToProjectsBtn.addEventListener('click', function() {
-            projectDetailsSection.classList.add('hidden');
-            portfolioSection.classList.remove('hidden');
-            currentProjectId = null;
-        });
-        
-        // Project cards
-        projectsContainer.addEventListener('click', function(e) {
-            const projectCard = e.target.closest('.project-card');
-            if (!projectCard) return;
+            currentProjectId = projectId;
+            projectDetailTitle.textContent = project.name;
+            projectDetailCategory.textContent = getCategoryName(project.category);
+            projectImagesCount.textContent = `${project.images.length} images`;
             
-            const projectId = projectCard.dataset.projectId;
+            projectImagesContainer.innerHTML = '';
             
-            const actionBtn = e.target.closest('[data-action]');
-            if (actionBtn && isEditMode) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const action = actionBtn.dataset.action;
-                
-                if (action === 'add-images') {
-                    currentProjectId = projectId;
-                    uploadPreview.innerHTML = '';
-                    progressBar.style.width = '0%';
-                    filesToUpload = [];
-                    openModal(uploadModal);
-                } else if (action === 'delete-project') {
-                    showConfirmation(
-                        'Delete Project', 
-                        `Are you sure you want to delete this project and all its images?`,
-                        () => deleteProject(projectId)
-                    );
-                }
-                return;
-            }
-            
-            viewProjectDetails(projectId);
-        });
-        
-        // Project images
-        projectImagesContainer.addEventListener('click', function(e) {
-            const imageItem = e.target.closest('.image-item');
-            if (!imageItem) return;
-            
-            const imageId = imageItem.dataset.imageId;
-            const project = portfolioData.projects.find(p => p.id === currentProjectId);
-            
-            const deleteBtn = e.target.closest('[data-action="delete-image"]');
-            if (deleteBtn && isEditMode) {
-                e.preventDefault();
-                e.stopPropagation();
-                showConfirmation(
-                    'Delete Image', 
-                    'Are you sure you want to delete this image?',
-                    () => deleteImage(currentProjectId, imageId)
-                );
-                return;
-            }
-            
-            if (project) {
-                const image = project.images.find(img => img.id === imageId);
-                if (image) {
-                    openLightbox(image.url, currentProjectId);
-                }
-            }
-        });
-        
-        // File upload functionality
-        browseBtn.addEventListener('click', function() {
-            fileInput.click();
-        });
-        
-        fileInput.addEventListener('change', function() {
-            handleFiles(this.files);
-        });
-        
-        // Drag and drop events
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-        });
-        
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
-        
-        dropArea.addEventListener('drop', handleDrop, false);
-        
-        // Upload button
-        uploadBtn.addEventListener('click', function() {
-            uploadImages();
-        });
-        
-        // Close modals
-        document.querySelectorAll('.close-modal').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const modal = this.closest('.modal');
-                if (modal) closeModal(modal);
-            });
-        });
-        
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) closeModal(this);
-            });
-        });
-        
-        // Close lightbox
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === this) closeLightbox();
-        });
-        
-        // Confirmation modal buttons
-        confirmBtn.addEventListener('click', function() {
-            if (currentConfirmCallback) currentConfirmCallback();
-            closeConfirmation();
-        });
-        
-        cancelBtn.addEventListener('click', closeConfirmation);
-        confirmationModal.addEventListener('click', function(e) {
-            if (e.target === this) closeConfirmation();
-        });
-        
-        // Contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
-        });
-        
-        // Portfolio filter
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelector('.filter-btn.active').classList.remove('active');
-                this.classList.add('active');
-            });
-        });
-        
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    }
-
-    function toggleEditMode(enable) {
-        isEditMode = enable;
-        
-        if (enable) {
-            document.querySelectorAll('.project-actions').forEach(el => el.style.opacity = '1');
-            document.querySelectorAll('.image-actions').forEach(el => el.style.opacity = '1');
-            editModeBtn.classList.add('active');
-            publicModeBtn.classList.remove('active');
-        } else {
-            document.querySelectorAll('.project-actions').forEach(el => el.style.opacity = '0');
-            document.querySelectorAll('.image-actions').forEach(el => el.style.opacity = '0');
-            editModeBtn.classList.remove('active');
-            publicModeBtn.classList.add('active');
-            adminPanel.classList.remove('active');
-        }
-    }
-
-    function handleFiles(files) {
-        filesToUpload = Array.from(files);
-        updateFilePreview();
-    }
-
-    function handleDrop(e) {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        handleFiles(files);
-    }
-
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-
-    function highlight() {
-        dropArea.style.borderColor = 'var(--accent)';
-        dropArea.style.backgroundColor = 'rgba(77, 166, 255, 0.1)';
-    }
-
-    function unhighlight() {
-        dropArea.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-        dropArea.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
-    }
-
-    function updateFilePreview() {
-        uploadPreview.innerHTML = '';
-        
-        if (filesToUpload.length === 0) return;
-        
-        filesToUpload.forEach((file, index) => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'preview-item';
-                previewItem.innerHTML = `
-                    <img src="${e.target.result}" alt="${file.name}">
-                    <div class="preview-remove" data-index="${index}">&times;</div>
-                `;
-                uploadPreview.appendChild(previewItem);
-                
-                previewItem.querySelector('.preview-remove').addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
-                    filesToUpload.splice(index, 1);
-                    updateFilePreview();
+            if (project.images.length === 0) {
+                projectImagesContainer.innerHTML = '<p class="text-center">No images in this project yet.</p>';
+            } else {
+                project.images.forEach(image => {
+                    const imageItem = document.createElement('div');
+                    imageItem.className = 'image-item';
+                    imageItem.dataset.imageId = image.id;
+                    imageItem.innerHTML = `
+                        <img src="${image.thumbnail}" alt="${image.name}">
+                    `;
+                    projectImagesContainer.appendChild(imageItem);
                 });
-            };
-            reader.readAsDataURL(file);
+            }
+            
+            portfolioSection.classList.add('hidden');
+            projectDetailsSection.classList.remove('hidden');
+        }
+
+        function setupEventListeners() {
+            // Navigation
+            document.querySelector('.hamburger').addEventListener('click', function() {
+                this.classList.toggle('active');
+                document.querySelector('.nav-links').classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.querySelector('.hamburger').classList.remove('active');
+                    document.querySelector('.nav-links').classList.remove('active');
+                });
+            });
+            
+            // Back to projects
+            backToProjectsBtn.addEventListener('click', function() {
+                projectDetailsSection.classList.add('hidden');
+                portfolioSection.classList.remove('hidden');
+            });
+            
+            // Project cards
+            projectsContainer.addEventListener('click', function(e) {
+                const projectCard = e.target.closest('.project-card');
+                if (!projectCard) return;
+                
+                const projectId = projectCard.dataset.projectId;
+                
+                // Regular click - view project
+                viewProjectDetails(projectId);
+            });
+            
+            // Project images
+            projectImagesContainer.addEventListener('click', function(e) {
+                const imageItem = e.target.closest('.image-item');
+                if (!imageItem) return;
+                
+                const imageId = imageItem.dataset.imageId;
+                const project = portfolioData.projects.find(p => p.id === currentProjectId);
+                
+                // Regular click - open lightbox
+                if (project) {
+                    const imageIndex = project.images.findIndex(img => img.id === imageId);
+                    if (imageIndex !== -1) {
+                        openLightbox(project.images, imageIndex);
+                    }
+                }
+            });
+            
+            // Lightbox navigation
+            lightboxClose.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', showPrevImage);
+            nextBtn.addEventListener('click', showNextImage);
+            
+            // Close lightbox when clicking outside
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeLightbox();
+                }
+            });
+            
+            // Contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            });
+            
+            // Portfolio filter
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelector('.filter-btn.active').classList.remove('active');
+                    this.classList.add('active');
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Lightbox functions
+        function openLightbox(images, index) {
+            currentProjectImages = images;
+            currentImageIndex = index;
+            
+            if (currentProjectImages.length > 0 && currentImageIndex >= 0 && currentImageIndex < currentProjectImages.length) {
+                const image = currentProjectImages[currentImageIndex];
+                lightboxImage.src = image.data;
+                lightboxCaption.textContent = image.name;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function showPrevImage() {
+            if (currentProjectImages.length === 0) return;
+            
+            currentImageIndex--;
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentProjectImages.length - 1;
+            }
+            
+            const image = currentProjectImages[currentImageIndex];
+            lightboxImage.src = image.data;
+            lightboxCaption.textContent = image.name;
+        }
+
+        function showNextImage() {
+            if (currentProjectImages.length === 0) return;
+            
+            currentImageIndex++;
+            if (currentImageIndex >= currentProjectImages.length) {
+                currentImageIndex = 0;
+            }
+            
+            const image = currentProjectImages[currentImageIndex];
+            lightboxImage.src = image.data;
+            lightboxCaption.textContent = image.name;
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', function(e) {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            }
         });
-    }
-
-    function openLightbox(imageSrc, projectId) {
-        lightboxImage.src = imageSrc;
-        openModal(lightbox);
-    }
-
-    function closeLightbox() {
-        closeModal(lightbox);
-    }
-
-    function showConfirmation(title, message, callback) {
-        confirmTitle.textContent = title;
-        confirmMessage.textContent = message;
-        currentConfirmCallback = callback;
-        openConfirmation();
-    }
-
-    function openModal(modal) {
-        modal.classList.add('active');
-    }
-
-    function closeModal(modal) {
-        modal.classList.remove('active');
-    }
-
-    function openConfirmation() {
-        confirmationModal.classList.add('active');
-    }
-
-    function closeConfirmation() {
-        confirmationModal.classList.remove('active');
-        currentConfirmCallback = null;
-    }
-</script>
+    </script>
 </body>
 </html>
